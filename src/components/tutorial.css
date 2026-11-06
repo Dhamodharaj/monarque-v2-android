@@ -1,0 +1,52 @@
+/* First-time tutorial: a spotlight tour over the real table, plus a gold pointer for the first rounds. */
+.tut-layer { position: fixed; inset: 0; z-index: 400; }
+.tut-dim { position: absolute; inset: 0; background: rgba(4, 7, 8, .8); }
+/* The hole is the target's box; its giant shadow dims everything else while the target stays fully lit. */
+.tut-hole { position: absolute; border-radius: 12px; pointer-events: none; box-shadow: 0 0 0 9999px rgba(4, 7, 8, .8), 0 0 0 2px #dfe4d8, 0 0 26px 4px rgba(200, 214, 196, .5); transition: left .28s ease, top .28s ease, width .28s ease, height .28s ease; }
+.tut-card { position: absolute; width: min(380px, calc(100vw - 20px)); max-height: calc(100vh - 20px); overflow-y: auto; box-sizing: border-box; padding: 18px 20px 16px; border-radius: 16px; background: linear-gradient(180deg, #233739, #162324); border: 2px solid #a4aa9f; color: #cae2e1; box-shadow: 0 10px 44px rgba(0, 0, 0, .6), 0 0 30px rgba(164, 170, 159, .22); font-family: 'Segoe UI', sans-serif; transition: left .28s ease, top .28s ease; }
+.tut-card h3 { margin: 6px 0 8px; font-size: 22px; line-height: 1.2; color: #dfe3da; }
+.tut-body p { margin: 0 0 9px; font-size: 14.5px; line-height: 1.5; }
+.tut-body .tut-li { display: flex; gap: 8px; margin-bottom: 6px; }
+.tut-body .tut-li b { color: #d9c98a; flex: none; }
+.tut-progress { height: 3px; margin: 12px 0 12px; border-radius: 3px; background: rgba(228, 231, 231, .16); overflow: hidden; }
+.tut-progress i { display: block; height: 100%; background: linear-gradient(90deg, #8f9a88, #d9c98a); transition: width .28s ease; }
+
+/* Live pointer for the first rounds: never blocks a click. */
+.tut-ring { position: fixed; z-index: 300; border-radius: 12px; pointer-events: none; border: 2px solid #e8d9a0; box-shadow: 0 0 0 4px rgba(232, 217, 160, .16), 0 0 24px rgba(232, 217, 160, .55); animation: tutPulse 1.5s ease-in-out infinite; transition: left .25s ease, top .25s ease, width .25s ease, height .25s ease; }
+.tut-hint { position: fixed; z-index: 301; display: flex; align-items: flex-start; gap: 8px; box-sizing: border-box; max-width: min(300px, calc(100vw - 20px)); padding: 9px 10px 9px 13px; border-radius: 12px; background: linear-gradient(180deg, #2c2a1c, #1b1a12); border: 1px solid #e8d9a0; color: #f1ead0; font: 600 13px/1.4 'Segoe UI', sans-serif; box-shadow: 0 6px 24px rgba(0, 0, 0, .55); pointer-events: auto; transition: left .25s ease, top .25s ease; }
+.tut-hint-text { flex: 1; }
+.tut-hint-x { flex: none; width: 22px; height: 22px; padding: 0; border-radius: 50%; border: 1px solid rgba(241, 234, 208, .4); background: transparent; color: #f1ead0; font-size: 15px; line-height: 1; cursor: pointer; }
+.tut-hint-x:hover { background: rgba(241, 234, 208, .16); }
+@keyframes tutPulse { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .tut-ring { animation: none; }
+  .tut-hole, .tut-card, .tut-hint, .tut-ring, .tut-progress i { transition: none; }
+}
+@media (max-width: 640px) { .tut-card { padding: 14px 15px 13px; } .tut-card h3 { font-size: 19px; } .tut-body p { font-size: 13.5px; } }
+
+/* The ? button in the match header: a gold badge so it reads at a glance (the quiet grey ring is for the i button).
+   It pulses a few times when the match opens, then rests as a steady glow. */
+.table-screen .game-header .game-info-button.tutorial-help-button {
+  width: 29px; height: 29px; flex: 0 0 29px;
+  font: 900 17px/1 'Segoe UI', system-ui, sans-serif; font-style: normal;
+  color: #1c1708;
+  background: radial-gradient(circle at 35% 28%, #fff4c4 0%, #e8d9a0 45%, #c4a548 100%);
+  border: 2px solid #fff0b8;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .55), 0 0 12px 2px rgba(232, 217, 160, .55);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .45);
+  animation: tutHelpPulse 1.9s ease-in-out 3;
+}
+.table-screen .game-header .game-info-button.tutorial-help-button:hover,
+.table-screen .game-header .game-info-button.tutorial-help-button:focus-visible {
+  background: radial-gradient(circle at 35% 28%, #fffbe0 0%, #f4e7b0 45%, #d8b857 100%);
+  border-color: #fff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .55), 0 0 18px 4px rgba(244, 231, 176, .8);
+  transform: translateY(-1px) scale(1.1);
+}
+@keyframes tutHelpPulse {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(0, 0, 0, .55), 0 0 12px 2px rgba(232, 217, 160, .55); }
+  50% { box-shadow: 0 0 0 1px rgba(0, 0, 0, .55), 0 0 0 7px rgba(232, 217, 160, .28), 0 0 22px 6px rgba(232, 217, 160, .85); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .table-screen .game-header .game-info-button.tutorial-help-button { animation: none; }
+}

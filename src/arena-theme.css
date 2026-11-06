@@ -1,0 +1,121 @@
+/* Arena theme: loaded LAST. Panels take the colour of the arena behind them, and the dark overlays are lifted so the art reads.
+   Palette stays inside the brief (obsidian / teal / ash / crimson): each arena only shifts hue and saturation, never to neon. */
+:root, [data-arena="cathedral"] { --ar-h: 187; --ar-s: 30%; --ar-l: 15%; }
+[data-arena="fortress"] { --ar-h: 8;   --ar-s: 36%; --ar-l: 14%; }
+[data-arena="sea"]      { --ar-h: 200; --ar-s: 34%; --ar-l: 15%; }
+[data-arena="temple"]   { --ar-h: 356; --ar-s: 32%; --ar-l: 14%; }
+[data-arena="citadel"]  { --ar-h: 214; --ar-s: 28%; --ar-l: 19%; }
+[data-arena="ruins"]    { --ar-h: 42;  --ar-s: 24%; --ar-l: 14%; }
+[data-arena="cosmic"]   { --ar-h: 280; --ar-s: 30%; --ar-l: 13%; }
+.table-screen, .arena-setup-screen, .sm-screen {
+  --panel: hsl(var(--ar-h) var(--ar-s) var(--ar-l) / .64);
+  --panel-hi: hsl(var(--ar-h) var(--ar-s) calc(var(--ar-l) + 8%) / .72);
+  --panel-edge: hsl(var(--ar-h) calc(var(--ar-s) + 12%) 52% / .5);
+}
+
+/* ---- battle table ---- */
+.table-screen .header-chip, .table-screen .opp2, .table-screen .wildcard-action-panel, .table-screen .coach-bar, .table-screen .selected-card-dock,
+.table-screen .human-profile, .table-screen .player-hand, .table-screen .bottom-game-actions, .table-screen .trick-area, .table-screen .turn-badge,
+.table-screen .player-hand-wrap {
+  background: var(--panel) !important; border-color: var(--panel-edge) !important; backdrop-filter: blur(5px) saturate(1.1);
+}
+.table-screen .trick-area { background: hsl(var(--ar-h) var(--ar-s) calc(var(--ar-l) - 4%) / .45) !important; }
+.table-screen .turn-badge, .table-screen .selected-card-dock { background: var(--panel-hi) !important; }
+.table-screen .hp-meter, .table-screen .ki-meter { background: hsl(var(--ar-h) var(--ar-s) calc(var(--ar-l) - 4%) / .6) !important; border-color: var(--panel-edge) !important; }
+.table-screen { background-blend-mode: normal; }
+
+/* Monarque's seat: the supplied image, fully inside the frame, never clipped by the viewport */
+.table-screen .table-center .gm-emblem { position: absolute; top: -70px; left: 50%; transform: translateX(-50%); width: clamp(120px, 11vw, 190px); height: 104px; z-index: 40; overflow: visible; }
+.table-screen .table-center .gm-emblem img { width: 100%; height: 100%; object-fit: contain; object-position: center bottom; filter: drop-shadow(0 4px 14px rgba(0,0,0,.7)) drop-shadow(0 0 16px hsl(var(--ar-h) 60% 50% / .35)); }
+.table-screen .table-center .gm-label { margin-top: 36px; }
+
+
+/* ---- story screens: lift the heavy vignette, tint plates to the round's arena ---- */
+.sm-screen::before { background: radial-gradient(ellipse at 50% 40%, rgba(3,4,4,.05) 0, rgba(3,4,4,.38) 66%, rgba(2,3,3,.78) 100%), linear-gradient(rgba(4,5,5,.18), rgba(4,5,5,.18)), var(--scene) center/cover no-repeat !important; filter: grayscale(.2) contrast(1.05) brightness(1.15) !important; }
+.sm-screen::after { opacity: .45 !important; }
+.sm-panel, .sm-tile, .sm-claim, .sm-hud { background: var(--panel) !important; border-color: var(--panel-edge) !important; backdrop-filter: blur(5px); }
+.sm-tile.on, .sm-claim.on { background: var(--panel-hi) !important; }
+.sm-screen { color: #dfe2dc; }
+.sm-muted, .sm-panel p { color: #c3c8c0; }
+
+
+
+
+/* legibility over the brighter art */
+.sm-screen { text-shadow: 0 1px 3px rgba(0,0,0,.9), 0 0 10px rgba(0,0,0,.55); }
+.sm-screen::before { filter: grayscale(.2) contrast(1.05) brightness(1.0) !important; }
+.sm-roundhead, .sm-track, .sm-topbar { background: linear-gradient(rgba(3,5,6,.62), rgba(3,5,6,0)); }
+.sm-tile, .sm-claim { background: hsl(var(--ar-h) var(--ar-s) var(--ar-l) / .78) !important; }
+.sm-panel { background: hsl(var(--ar-h) var(--ar-s) var(--ar-l) / .74) !important; }
+.sm-roundhead h2, .sm-title { filter: drop-shadow(0 2px 4px #000) !important; }
+.sm-op-throne img.monarque-art { height: min(64vh, 100%); max-width: 92vw; object-fit: contain; filter: drop-shadow(0 10px 30px rgba(0,0,0,.8)); }
+.tour-overlay, .home-dialog-backdrop, .cpv-backdrop, .card-preview-backdrop { background: rgba(4, 7, 8, .3) !important; backdrop-filter: none; }
+.table-screen::after, .table-screen::before { opacity: .6; }
+
+/* ===== round 3 of fixes: see-through panels, big clear selected card, calm hand, compact round bar ===== */
+:root, [data-arena] { --ar-a: .34; }
+.table-screen, .arena-setup-screen, .sm-screen { --panel: hsl(var(--ar-h) var(--ar-s) var(--ar-l) / var(--ar-a)); --panel-hi: hsl(var(--ar-h) var(--ar-s) calc(var(--ar-l) + 6%) / .5); }
+.table-screen .header-chip, .table-screen .opp2, .table-screen .wildcard-action-panel, .table-screen .coach-bar, .table-screen .selected-card-dock,
+.table-screen .human-profile, .table-screen .player-hand, .table-screen .bottom-game-actions, .table-screen .turn-badge, .table-screen .player-hand-wrap { backdrop-filter: blur(2px); }
+.table-screen .trick-area { background: hsl(var(--ar-h) var(--ar-s) 8% / .18) !important; }
+.table-screen .table-center, .table-screen .game-table, .table-screen .human-area, .table-screen .opponent-rail { background: transparent !important; border-color: hsl(var(--ar-h) 30% 55% / .22) !important; box-shadow: none !important; backdrop-filter: none !important; }
+.table-screen .player-hand-wrap { background: transparent !important; border: 0 !important; }
+.table-screen .player-hand { background: hsl(var(--ar-h) var(--ar-s) 8% / .30) !important; }
+.table-screen .hp-meter, .table-screen .ki-meter { background: hsl(var(--ar-h) var(--ar-s) 8% / .35) !important; }
+
+/* Monarque: bigger, clear, centred above the table */
+.table-screen .table-center .gm-emblem { width: clamp(170px, 14vw, 250px); height: clamp(120px, 14vh, 150px); top: clamp(-96px, -9vh, -78px); }
+.table-screen .table-center .gm-emblem img { filter: drop-shadow(0 6px 16px rgba(0,0,0,.85)) drop-shadow(0 0 22px hsl(var(--ar-h) 60% 55% / .45)); }
+.table-screen .table-center .gm-label { margin-top: 52px; text-shadow: 0 1px 6px #000; }
+
+/* Selected card: one large, clear card face. No duplicate text block. */
+.table-screen .selected-card-dock { display: flex; flex-direction: column; align-items: center; gap: 8px; overflow: auto; }
+.table-screen .selected-card-dock .selected-card-title { flex: none; }
+.table-screen .selected-card-dock .sel-art { position: relative; flex: none; width: min(100%, 236px); aspect-ratio: 5 / 7; max-height: 44vh; height: auto !important; padding: 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--panel-edge); box-shadow: 0 10px 28px rgba(0,0,0,.55); background: #0b1112; cursor: zoom-in; }
+.table-screen .selected-card-dock .sel-art img, .table-screen .selected-card-dock .sel-art .card-art-fallback { width: 100% !important; height: 100% !important; object-fit: cover; }
+.table-screen .selected-card-dock .sel-art .card-art-fallback { gap: 6px; padding: 14px; }
+.table-screen .selected-card-dock .sel-art .caf-initials { font-size: clamp(52px, 7vw, 92px) !important; }
+.table-screen .selected-card-dock .sel-art .card-art-fallback > span { font: 700 1.25rem/1.15 var(--mq-serif); letter-spacing: .02em; color: #e3e6e0; text-shadow: 0 2px 6px #000; }
+.table-screen .selected-card-dock .sel-art .card-art-fallback > small { font: 600 .8rem/1.2 var(--mq-serif); color: #c3c8c0; }
+.table-screen .selected-card-dock .sel-face-stats { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-between; padding: 8px 12px; background: linear-gradient(transparent, rgba(0,0,0,.78)); font: 800 1.05rem/1 var(--mq-serif); color: #f0f2ec; z-index: 3; }
+.table-screen .selected-card-dock .sel-art-zoom { position: absolute; top: 6px; right: 8px; z-index: 3; font-size: 1rem; opacity: .85; }
+.table-screen .selected-card-dock .game-controls { width: 100%; }
+.table-screen .selected-card-dock .stat-call-label, .table-screen .selected-card-dock .selected-card-rarity { display: none; }
+
+/* Hand: calm. Equal cards, a small lift when selected, arrows sit outside the cards. */
+.table-screen .player-hand-scroll { padding: 12px 46px 6px !important; scroll-padding-inline: 46px; }
+.table-screen .player-hand-nav { z-index: 6; background: hsl(var(--ar-h) var(--ar-s) 10% / .8); border-radius: 50%; width: 36px; height: 36px; }
+.table-screen .player-hand-nav-prev { left: 4px !important; } .table-screen .player-hand-nav-next { right: 4px !important; }
+.table-screen .player-hand .card { transition: transform .16s ease, box-shadow .16s ease, outline-color .16s ease; transform: none; animation: none !important; }
+.table-screen .player-hand .card:hover:not(.disabled) { transform: translateY(-6px); }
+.table-screen .player-hand .card.selected { transform: translateY(-10px) !important; outline: 2px solid #c9ccc4; outline-offset: 2px; box-shadow: 0 12px 24px rgba(0,0,0,.5); }
+
+/* Round bar: compact strip at the top, out of the way of Call POWER / RANK */
+.sm-hud { position: fixed !important; top: 10px !important; bottom: auto !important; left: 280px !important; width: auto !important; max-width: max(300px, calc(50vw - 320px)) !important; padding: 6px 12px !important; display: grid; grid-template-columns: auto auto; column-gap: 12px; row-gap: 2px; align-items: center; background: hsl(var(--ar-h) var(--ar-s) 9% / .62) !important; z-index: 120 !important; }
+.sm-hud .sm-hud-banner { grid-column: 1; grid-row: 1; margin: 0; }
+.sm-hud .sm-hud-stake { grid-column: 1; grid-row: 2; font-size: .7rem; opacity: .9; }
+.sm-hud .sm-hud-foe { grid-column: 2; grid-row: 1 / span 2; margin: 0; }
+.sm-hud .sm-hud-foe .sm-portrait { width: 40px !important; height: 40px !important; font-size: 14px !important; }
+.sm-hud .sm-bubble { position: absolute; left: 0; top: calc(100% + 6px); width: 300px; z-index: 130; }
+.sm-hud .sm-hud-toggle { grid-column: 1 / -1; justify-self: start; }
+.sm-hud .sm-hud-powers { position: absolute; left: 0; top: calc(100% + 4px); min-width: 240px; background: hsl(var(--ar-h) var(--ar-s) 9% / .92); padding: 8px 12px; border-radius: 6px; z-index: 130; }
+.sm-hud .sm-low-soul { grid-column: 1 / -1; }
+
+/* ---- opening: plates behind text, three Essence plates instead of empty circles ---- */
+.sm-op-law { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; width: min(86vw, 880px); margin: auto; }
+.sm-op-law > div { background: hsl(var(--ar-h) var(--ar-s) 9% / .72); border: 1px solid var(--panel-edge); border-radius: 10px; padding: 16px 18px; text-align: center; backdrop-filter: blur(3px); }
+.sm-op-law b { display: block; font: 700 1.05rem/1.2 var(--mq-serif); letter-spacing: .14em; text-transform: uppercase; color: #e6e8e2; margin-bottom: 6px; }
+.sm-op-law span { display: block; font: 400 .92rem/1.4 var(--mq-serif); color: #c9cdc5; letter-spacing: 0; text-transform: none; }
+.sm-op-dialog .sm-body { background: hsl(var(--ar-h) var(--ar-s) 8% / .66); padding: 10px 16px; border-radius: 8px; }
+.sm-op-throne img.monarque-art { height: min(58vh, 100%); }
+
+
+.table-screen .table-center .gm-label { display: none !important; }
+.table-screen .table-center .gm-emblem { width: clamp(220px, 17vw, 300px); height: clamp(150px, 18vh, 190px); top: clamp(-128px, -13vh, -104px); }
+.table-screen .table-center .gm-emblem::before { content: ""; position: absolute; inset: 8% 6% 0; z-index: -1; background: radial-gradient(ellipse at 50% 60%, rgba(4,7,8,.78), rgba(4,7,8,.35) 55%, transparent 75%); }
+.table-screen .selected-card-dock .sel-art { width: min(100%, 196px); max-height: 33vh; }
+.table-screen .selected-card-dock .sel-art .caf-initials { font-size: clamp(44px, 5vw, 70px) !important; }
+.table-screen .table-center .gm-emblem { top: -88px !important; width: clamp(190px, 14vw, 250px); height: 134px; }
+.sm-hud { left: 250px !important; max-width: max(280px, calc(50vw - 390px)) !important; }
+.sm-op-title h1 { background: linear-gradient(#f4f5f0, #aeb4a9 70%) !important; -webkit-background-clip: text; background-clip: text; filter: drop-shadow(0 3px 6px #000) drop-shadow(0 0 18px rgba(0,0,0,.8)) !important; }
+.sm-op-title small { color: #e7aeb4 !important; text-shadow: 0 1px 4px #000; }

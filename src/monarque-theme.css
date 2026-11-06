@@ -1,0 +1,87 @@
+/* MONARQUE: CARDS OF THE FALLEN — palette and typographic authority. Loaded last; overrides the legacy sheets.
+   Obsidian #080B0C (~75%) · Dark Teal #172A2A (~18%) · Pale Teal #52716F / Ashen Silver #999C96 (~5%) · Crimson #59151A (~2%). */
+:root {
+  --mq-obsidian: #080b0c; --mq-teal-dark: #172a2a; --mq-teal-pale: #52716f; --mq-silver: #999c96; --mq-crimson: #59151a;
+  --mq-text: #b9bcb5; --mq-text-dim: #7f857f;
+  --mq-serif: "Cormorant Garamond", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --mq-sans: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--mq-text); background: var(--mq-obsidian); font-family: var(--mq-sans);
+}
+body { background: var(--mq-obsidian); color: var(--mq-text); }
+h1, h2, h3, .eyebrow, .sm-title, .guide-content-heading h3, .home-dialog h2, .result-panel h1, .shop-blue-title h1, .decree-panel h2, .game-header-brand h1 {
+  font-family: var(--mq-serif); letter-spacing: .06em; font-weight: 600; text-transform: none;
+}
+.eyebrow { letter-spacing: .3em; text-transform: uppercase; color: var(--mq-teal-pale); font-family: var(--mq-sans); font-size: 11px; }
+/* Stats stay in the legible sans. */
+.card-stats, .card-stats b, .resource-meter, .header-chip, .opp2-hp, .boost-preview, .round-result-row, .floater { font-family: var(--mq-sans); font-variant-numeric: tabular-nums; }
+
+/* Opening page and menu: the supplied wallpaper, real buttons only. The wallpaper has thin black bars, so it is scaled a little. */
+.home-screen.home-screen-art { background: var(--mq-obsidian); }
+.home-screen.home-screen-art::before { content: ""; position: absolute; inset: 0; background: url("/ui/wallpaper.webp") center / cover no-repeat; transform: scale(1.1); z-index: -2; }
+.home-screen.home-screen-art::after { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(ellipse at 50% 70%, rgba(8,11,12,0) 30%, rgba(8,11,12,.55) 100%), linear-gradient(180deg, rgba(8,11,12,0) 55%, rgba(8,11,12,.72) 100%); pointer-events: none; }
+.home-menu-button { font-family: var(--mq-serif); letter-spacing: .22em; text-transform: uppercase; color: var(--mq-silver); background: rgba(8,11,12,.5); border: 1px solid rgba(82,113,111,.35); border-radius: 0; }
+.home-menu-button:first-child { background: linear-gradient(90deg, transparent, rgba(89,21,26,.82), transparent); border-color: var(--mq-crimson); color: #d4d6d0; }
+.home-menu-button:hover, .home-menu-button:focus-visible { color: #d4d6d0; border-color: var(--mq-teal-pale); outline: 1px solid var(--mq-teal-pale); outline-offset: 2px; }
+
+/* Tokens that stood in for portraits and art that is not shipped. */
+.table-screen .opp2-avatar, .table-screen .human-avatar { display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at 30% 20%, hsl(var(--h, 176) 22% 26%), #0c1415 70%); color: var(--mq-silver); font-family: var(--mq-serif); font-size: 1.6em; }
+.table-screen .human-avatar { --h: 178; }
+.table-screen .opp2-avatar b, .table-screen .human-avatar b { font-weight: 600; letter-spacing: .06em; }
+.monarque-sigil { display: block; width: 100%; height: 100%; min-height: 40px; background: radial-gradient(circle at 50% 50%, transparent 38%, var(--mq-teal-pale) 39% 41%, transparent 42%), radial-gradient(circle at 50% 50%, var(--mq-crimson) 0 14%, transparent 15%); opacity: .8; }
+.wildcard-action { background-image: radial-gradient(circle at 50% 30%, #1d3333, #0b1213 75%); }
+.wildcard-action-image { visibility: visible; }
+
+/* Story portraits keep the muted, cold look even at high saturation hues. */
+.sm-portrait { border-color: hsl(var(--hue) 20% 46%) !important; box-shadow: 0 0 0 1px #000, 0 6px 18px rgba(0,0,0,.7), inset 0 0 22px rgba(0,0,0,.75) !important; }
+.sm-vs-side.foe .sm-portrait { box-shadow: 0 0 28px rgba(89,21,26,.55), 0 0 0 2px #59151a !important; }
+.sm-mono { text-shadow: none !important; font-family: var(--mq-serif); }
+/* Crimson is reserved for danger, the fall and the primary action. */
+.error-toast { background: var(--mq-crimson); color: #d4d6d0; border-color: #7a2229; }
+
+/* No neon: strip any remaining bloom from glowing accents. */
+.special-spotlight-glow { filter: saturate(.4); opacity: .6; }
+.curse-orb { background: radial-gradient(circle, #8a2a31, #59151a 60%, transparent 70%) !important; box-shadow: 0 0 14px rgba(89,21,26,.8) !important; }
+
+/* Reduced motion is honoured everywhere, including the opening and menu. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+
+/* Powers: engraved glyph in place of card art. */
+.sm-pcard-art { background: radial-gradient(circle at 50% 35%, #1d3333, #0b1213 80%) !important; display: flex; align-items: center; justify-content: center; }
+.sm-pcard-glyph { font-style: normal; font-size: 44px; color: var(--mq-teal-pale); opacity: .75; z-index: 0; }
+.sm-pcard.compact .sm-pcard-glyph { font-size: 26px; }
+.sm-screen { background: var(--mq-obsidian); }
+.sm-essence { max-width: 60ch; font-family: var(--mq-serif); font-size: 1.12em; line-height: 1.5; color: var(--mq-text); border-left: 2px solid var(--mq-crimson); padding-left: 14px; }
+.sm-low-soul { color: #d4d6d0; background: var(--mq-crimson); border: 1px solid #7a2229; padding: 4px 10px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
+
+/* Opening scenes drawn in CSS (no generated art): the eclipse over an empty throne, and the three Essence rings. */
+.monarque-eclipse { position: relative; width: min(52vh, 80vw); aspect-ratio: 1; margin: auto; border-radius: 50%; background: radial-gradient(circle, #050707 0 46%, transparent 47%), conic-gradient(from 200deg, #52716f33, #52716f99, #52716f22, #52716f77, #52716f33); filter: blur(.4px); box-shadow: 0 0 60px rgba(82,113,111,.25), inset 0 0 40px #000; }
+.monarque-eclipse::after { content: ""; position: absolute; left: 50%; bottom: 18%; width: 16%; height: 30%; transform: translateX(-50%); background: #030404; clip-path: polygon(20% 100%, 20% 40%, 0 10%, 50% 0, 100% 10%, 80% 40%, 80% 100%); }
+.sm-op-law { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 4vw; align-items: center; justify-items: center; margin: auto; width: min(80vw, 720px); }
+.sm-op-law i { grid-row: 1; width: min(18vw, 140px); aspect-ratio: 1; border-radius: 50%; border: 1px solid var(--mq-teal-pale); box-shadow: inset 0 0 24px rgba(82,113,111,.25); }
+.sm-op-law i:nth-child(2) { border-color: var(--mq-silver); } .sm-op-law i:nth-child(3) { border-color: var(--mq-crimson); }
+.sm-op-law span { grid-row: 2; font-family: var(--mq-serif); letter-spacing: .12em; color: var(--mq-silver); font-size: .95rem; text-transform: uppercase; }
+.setup-sigil { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; font-family: var(--mq-serif); font-size: 3rem; color: var(--mq-silver); background: radial-gradient(circle at 30% 20%, #1d3333, #0b1213 75%); }
+
+/* Home menu: the supplied wallpaper carries the MONARQUE wordmark across its middle band, so the menu sits below it, at the lower left. */
+.home-menu-options { left: 3.2%; top: 64%; width: min(24%, 340px); gap: 1svh; }
+.home-menu-button { height: clamp(38px, 5.4svh, 52px); font-size: clamp(13px, 1.5vw, 19px); }
+@media (max-width: 900px) {
+  .home-menu-options { left: 6%; top: 63%; width: min(52%, 360px); }
+}
+@media (max-width: 560px) {
+  .home-menu-options { left: 6%; top: 64%; width: 62%; gap: 7px; }
+  .home-menu-button { height: clamp(40px, 6svh, 50px); font-size: 13px; }
+}
+
+/* Art-less cards: the card face already prints the name and form, so the fallback tile shows only the sigil/initials (no doubled, overlapping text). */
+.card .card-art-fallback > span, .card .card-art-fallback > small { display: none; }
+/* Fallback tiles stay inside the palette: pale teal for everyone, crimson for the apex tier. No per-name rainbow hues. */
+.card-art-fallback { --h: 178 !important; filter: saturate(.55); }
+.card-art-fallback.tier-op { --h: 355 !important; }
+.card-art-fallback .caf-initials { font-family: var(--mq-serif) !important; font-weight: 700 !important; text-shadow: 0 2px 8px #000 !important; }
+
+/* Author signature: main menu (bottom centre) */
+.game-signature { position: absolute; left: 0; right: 0; bottom: max(14px, env(safe-area-inset-bottom, 0px)); margin: 0; text-align: center; z-index: 3; font-size: .78rem; letter-spacing: .32em; text-transform: uppercase; color: rgba(203, 207, 201, .62); text-shadow: 0 1px 8px rgba(0, 0, 0, .8); pointer-events: none; }
+.game-signature b { font-weight: 700; color: rgba(225, 228, 222, .9); letter-spacing: .32em; }

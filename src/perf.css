@@ -1,0 +1,38 @@
+/* Performance pass (loaded last). Same look, fewer expensive paints:
+   - no backdrop-filter (re-blurs everything behind every panel on every frame)
+   - no infinite box-shadow / filter animations on the table
+   - cards are isolated so one hover does not repaint the whole table */
+.table-screen *, .table-screen, .su *, .sm-screen *, .round-result *, .cpv-backdrop, .tour-overlay { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+.table-screen .opp2.active, .table-screen .opponent.active, .table-screen .human-area.last-stand-mode, .table-screen.fx-highstakes .game-table,
+.wildcard-action.is-usable, .table-screen .opp-badge.laststand, .card-art-fallback .caf-aura, .special-chip, .opp-badge.curse { animation: none !important; }
+.table-screen .opp2.active, .table-screen .opponent.active { box-shadow: 0 0 0 2px rgba(214,218,208,.7) !important; }
+.table-screen .card { contain: layout paint style; }
+.table-screen .player-hand-scroll { contain: layout style; overscroll-behavior: contain; }
+.table-screen .trick-area, .table-screen .selected-card-dock, .table-screen .bottom-game-actions { contain: layout style; }
+.card-art-fallback { filter: none !important; }
+.table-screen .card, .su-hall img, .sm-tile { will-change: auto; }
+.table-screen .card:hover:not(.disabled) { transition-duration: .12s; }
+@media (prefers-reduced-motion: reduce) { * { animation-duration: .01s !important; transition-duration: .01s !important; } }
+
+/* story screens: no full-screen filter, no drifting particle layer, no endless portrait/ray animations */
+.sm-screen::before { filter: none !important; }
+.sm-screen::after { animation: none !important; will-change: auto; height: 100vh; opacity: .3 !important; }
+.sm-rays, .sm-portrait, .sm-vs-side .sm-portrait, .sm-road li.now .sm-portrait, .sm-btn.primary::after, .sm-btn.primary.big::before, .sm-op-throne::before, .sm-op-throne img, .sm-pcard::after, .sm-pcard .sm-pcard-art::before { animation: none !important; }
+.sm-title, .sm-roundhead h2, .sm-vic-head { filter: none !important; }
+.sm-portrait { will-change: auto; }
+
+/* ---- Performance pass 2 ---------------------------------------------------------------------
+   Every panel already has a translucent background, so the blur is a barely visible extra that costs a full-screen
+   re-blur whenever anything behind it moves. Off everywhere (Home, Mode select, Shop, dialogs, round result). To get the
+   frosted look back on one element, add `backdrop-filter: blur(Npx) !important` to it in a later stylesheet. */
+*, *::before, *::after { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+
+/* Endless animations that repaint every frame (filter / box-shadow / layout `left`): keep the static look, drop the loop. */
+.card.selected { animation: none !important; }                 /* the ring + glow still show; it no longer pulses the image brightness */
+.opponent.active { animation: none !important; }
+.hero-button::after { animation: none !important; }            /* the sweeping shine animated `left` (layout) forever */
+.decree-waiting-dot { animation-duration: 1.6s; }
+
+/* A background tab should cost nothing: pause every CSS animation while the page is hidden (class set in main.jsx). */
+html.tab-hidden *, html.tab-hidden *::before, html.tab-hidden *::after { animation-play-state: paused !important; }
+

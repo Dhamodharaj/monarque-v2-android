@@ -1,0 +1,63 @@
+# Netlify: build the static site and serve dist/.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# The game is a single page with no router, so no SPA rewrite is needed. (Do not add a catch-all /* -> /index.html:
+# a missing audio or image file must stay a real 404 so the game can fall back, not return HTML.)
+
+# ---- Security headers for every response -------------------------------------------------------
+# CSP notes: the game ships no inline scripts and loads nothing from other sites. 'unsafe-inline' is kept for styles only
+# (React inline style props). Web Audio fetches its files from the same origin (connect-src 'self').
+# To trial a stricter change safely, rename the header to Content-Security-Policy-Report-Only first.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self' data:; connect-src 'self'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+    Cross-Origin-Opener-Policy = "same-origin"
+    Strict-Transport-Security = "max-age=31536000"
+    X-Robots-Tag = "noimageindex, noarchive"
+
+# ---- Caching ------------------------------------------------------------------------------------
+# Vite fingerprints everything in /assets, so it can be cached for a year.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Game art and audio keep their file names between releases, so they cannot be "immutable". Instead: serve from the browser
+# cache for 7 days with no network wait, and after that keep serving the cached copy while a fresh one is fetched in the
+# background (stale-while-revalidate). Players never wait on art they already have; an update still shows within a visit or two.
+[[headers]]
+  for = "/audio/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800, stale-while-revalidate=2592000"
+[[headers]]
+  for = "/story/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800, stale-while-revalidate=2592000"
+[[headers]]
+  for = "/cards/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800, stale-while-revalidate=2592000"
+[[headers]]
+  for = "/ui/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800, stale-while-revalidate=2592000"
+[[headers]]
+  for = "/favicon.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+# index.html must always be revalidated so players get new builds right away.
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"

@@ -1,0 +1,242 @@
+/* Story cutscenes: the screenplay played as dialogue. Additions only. */
+@keyframes csIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes csBlink{50%{opacity:0}}
+@keyframes csSliver{0%,100%{opacity:.55;transform:scaleY(.96)}50%{opacity:1;transform:scaleY(1)}}
+@keyframes csFlood{from{opacity:0}to{opacity:1}}
+@keyframes csRage{0%,100%{opacity:.35;transform:scale(1)}50%{opacity:.8;transform:scale(1.12)}}
+.cs-screen{position:fixed;inset:0;z-index:70;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;background:#000;color:#d6d9d4;cursor:pointer;overflow:hidden;font-family:inherit}
+.cs-bar{position:absolute;left:0;right:0;height:7vh;background:#000;z-index:3}.cs-bar.top{top:0}.cs-bar.bottom{bottom:0}
+.cs-stage{position:absolute;inset:7vh 0 0;display:flex;align-items:center;justify-content:center;z-index:1;pointer-events:none}
+.cs-throne .cs-stage,.cs-final .cs-stage,.cs-berserk .cs-stage,.cs-ending .cs-stage{background:radial-gradient(ellipse at 50% 40%,#16211f 0,#050707 75%)}
+.cs-berserk .cs-stage{background:radial-gradient(ellipse at 50% 40%,#2a0d10 0,#060304 75%)}
+.cs-ending .cs-stage{background:radial-gradient(ellipse at 50% 100%,#2c3a37 0,#070a0a 70%)}
+.cs-stage img.cs-art{height:min(66vh,100%);max-width:90vw;object-fit:contain;filter:drop-shadow(0 20px 40px #000);opacity:.9}
+.cs-dialog{position:relative;z-index:5;width:100%;max-width:820px;padding:0 20px 11vh;display:flex;flex-direction:column;gap:8px;text-shadow:0 2px 12px #000}
+.cs-line,.cs-old{margin:0;line-height:1.55;font-size:1.18rem;animation:csIn .35s ease-out both}
+.cs-old{font-size:.92rem;opacity:.42}
+.cs-who,.cs-old b{display:block;letter-spacing:.24em;font-size:.62rem;font-weight:900;margin-bottom:2px;color:#969e91}
+.cs-m{color:#c4d3cc}.cs-m .cs-who{color:#b9a46a}
+.cs-p{color:#f0f2f1}.cs-p .cs-who{color:#7fb5b0}
+.cs-n{color:#9aa39a;font-style:italic}
+.cs-caret{color:#969e91;animation:csBlink .8s steps(1) infinite}.cs-caret.off{display:none}
+.cs-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:8px;min-height:44px}
+.cs-btn{background:linear-gradient(#2c3a37,#18211f);color:#e4e7e7;border:1px solid #969e9199;border-radius:10px;padding:10px 22px;font:inherit;font-weight:800;letter-spacing:.06em;cursor:pointer}
+.cs-btn:hover{border-color:#e4e7e7}.cs-btn.ghost{background:none;border-color:#e4e7e733;color:#9aa39a;font-weight:600}
+.cs-btn.choice{display:block;width:100%;text-align:left;font-size:1.05rem;padding:14px 20px}
+.cs-btn.choice.no{border-color:#a5505866;color:#cfa5a8}
+.cs-row.stack{flex-direction:column;align-items:stretch;width:100%}
+.cs-dots{display:flex;gap:7px}.cs-dots i{width:7px;height:7px;border-radius:50%;background:#e4e7e728}.cs-dots i.seen{background:#969e9188}.cs-dots i.on{background:#e4e7e7}
+/* black screen, green terminal text */
+.cs-black{background:#000;justify-content:center}
+.cs-black .cs-bar{display:none}.cs-black .cs-dialog{padding-bottom:0;max-width:640px;font-family:ui-monospace,Menlo,Consolas,monospace}
+.cs-black .cs-line,.cs-black .cs-line.cs-m,.cs-black .cs-line.cs-p,.cs-black .cs-line.cs-n{color:#44ff7d;text-shadow:0 0 10px #12b34a99;font-style:normal;font-size:1.3rem}
+.cs-black .cs-who{color:#26b85a}.cs-black .cs-btn{background:#031a0c;color:#44ff7d;border-color:#26b85a88}.cs-black .cs-btn.ghost{color:#26b85a;border-color:#26b85a33}.cs-black .cs-caret{color:#44ff7d}.cs-black .cs-dots i.on{background:#44ff7d}
+/* the cell */
+.cs-cell{background:#020303;justify-content:center;align-items:center;gap:24px;text-align:center}
+.cs-cell::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,#0a0d0d 0 54px,#060808 54px 56px),repeating-linear-gradient(0deg,transparent 0 62px,#0000008c 62px 64px);opacity:.9}
+.cs-cell::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,transparent 20%,#000 85%)}
+.cs-sliver{position:absolute;top:0;bottom:0;left:calc(50% - 2px);width:4px;background:linear-gradient(#d9ece4,#7fb5b0 60%,transparent);box-shadow:0 0 28px 6px #7fb5b055;animation:csSliver 4s ease-in-out infinite;z-index:1}
+.cs-cell.flood .cs-sliver{animation:none;width:100vw;left:0;opacity:1;background:#e8f2ee;box-shadow:none;transition:width 1.4s ease-in,left 1.4s ease-in}
+.cs-caption{position:relative;z-index:2;font-size:1.2rem;letter-spacing:.08em;color:#8d978f;font-style:italic;animation:csIn 1.2s ease-out both}
+.cs-flash{position:absolute;inset:0;background:#e8f2ee;z-index:6;animation:csFlood 1.2s ease-in both}
+/* figures */
+.cs-duo{display:flex;align-items:flex-end;justify-content:center;gap:clamp(24px,8vw,120px);margin-bottom:12vh}
+.cs-fig{position:relative}.cs-fig.gm .sm-portrait{box-shadow:0 0 40px #b9a46a55}
+.cs-fig.berserk .sm-portrait{box-shadow:0 0 50px #d0303066,0 0 0 2px #a55058;filter:saturate(1.2) contrast(1.1)}
+.cs-rage{position:absolute;inset:-20px;border-radius:50%;background:radial-gradient(circle,#c8282866,transparent 65%);animation:csRage 1.1s ease-in-out infinite;pointer-events:none}
+.cs-final .cs-stage img.cs-art{animation:csRage 3s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.cs-sliver,.cs-rage,.cs-caret,.cs-flash,.cs-final .cs-stage img.cs-art{animation:none!important}}
+.cs-freed{display:grid;grid-template-columns:repeat(8,auto);gap:12px;justify-content:center;opacity:.42;margin-bottom:22vh}
+@media(max-width:900px){.cs-freed{grid-template-columns:repeat(4,auto)}}
+/* berserk marks in the regular story screens */
+.sm-pcard.is-berserk{box-shadow:0 0 0 1px #a5505888,0 0 22px #c8282844}
+.sm-pcard.is-berserk .sm-pcard-tag{background:#5a1418;color:#ffd6d6}
+.sm-berserk-banner{margin:0 0 10px;padding:8px 12px;border-radius:10px;border:1px solid #a5505877;background:#2a0d1099;color:#e8c4c6;font-size:.92rem;line-height:1.45}
+.sm-berserk-banner b{letter-spacing:.2em;font-size:.68rem;color:#ff9a9a;margin-right:8px}
+.sm-hud-berserk{margin:4px 0 2px;padding:3px 8px;border-radius:8px;border:1px solid #a5505888;background:#2a0d10cc;color:#ffb3b3;font-size:.68rem;letter-spacing:.14em;font-weight:900}
+
+/* ---- themed layout: art above, dialogue in a game panel below (text never sits on the art) ---- */
+.cs-screen:not(.cs-black):not(.cs-cell){font-family:"Palatino Linotype","Book Antiqua",Palatino,"Iowan Old Style",Georgia,serif;justify-content:space-between;padding-top:7vh;padding-bottom:5vh;background:#221112}
+.cs-screen:not(.cs-black):not(.cs-cell)::before{content:"";position:absolute;inset:0;z-index:0;background:var(--scene,none) center/cover no-repeat;opacity:.5}
+.cs-screen:not(.cs-black):not(.cs-cell)::after{content:"";position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse at 50% 40%,rgba(34,17,18,.25) 0,rgba(34,17,18,.78) 70%,rgba(34,17,18,.96) 100%)}
+.cs-screen .cs-stage{position:relative;inset:auto;flex:1;min-height:0;width:100%;background:none!important;z-index:2}
+.cs-stage img.cs-art{height:100%;max-height:52vh;width:auto;max-width:80vw;opacity:1}
+.cs-screen:not(.cs-black):not(.cs-cell) .cs-dialog{max-width:760px;margin:0 20px;padding:18px 22px 14px;background:rgba(34,17,18,.9);border:1px solid rgba(165,80,88,.35);border-radius:16px;box-shadow:0 10px 36px rgba(0,0,0,.55),inset 0 1px 0 rgba(228,231,231,.07);text-shadow:none;gap:6px}
+.cs-screen:not(.cs-black):not(.cs-cell) .cs-line{font-size:1.1rem}
+.cs-screen:not(.cs-black):not(.cs-cell) .cs-old{font-size:.85rem;opacity:.4}
+.cs-row.choices{justify-content:center;gap:14px;margin-top:10px}
+.cs-row.choices .sm-btn{width:auto;min-width:0;max-width:300px;flex:0 1 auto}
+.cs-duo{margin-bottom:0}.cs-freed{margin-bottom:0}
+
+/* ======== Intro cinematic (Opening.jsx): picture-led shots with fading subtitles, no typewriter ======== */
+@keyframes ciWord{from{opacity:0;filter:blur(6px);transform:translateY(6px)}to{opacity:1;filter:none;transform:none}}
+@keyframes ciShake{0%,100%{transform:translate(0)}15%{transform:translate(-9px,5px)}30%{transform:translate(8px,-6px)}45%{transform:translate(-6px,-4px)}60%{transform:translate(5px,6px)}80%{transform:translate(-2px,2px)}}
+@keyframes ciFlashRed{0%{opacity:.95}100%{opacity:0}}
+@keyframes ciBeat{0%,100%{opacity:.25;transform:scale(1)}12%{opacity:.7;transform:scale(1.06)}24%{opacity:.3}36%{opacity:.55;transform:scale(1.03)}}
+@keyframes ciBlur{from{filter:blur(0) brightness(1)}to{filter:blur(14px) brightness(.15)}}
+@keyframes ciSlash{from{transform:scaleX(0);opacity:1}60%{opacity:1}to{transform:scaleX(1);opacity:0}}
+@keyframes ciDrip{0%,70%{transform:translateY(0);opacity:0}75%{opacity:.9}100%{transform:translateY(46vh);opacity:0}}
+@keyframes ciRise{from{transform:translateY(0);opacity:0}10%{opacity:.9}to{transform:translateY(-95vh) translateX(30px);opacity:0}}
+@keyframes ciFall{from{transform:translateY(-8vh);opacity:0}15%{opacity:.5}to{transform:translateY(100vh);opacity:0}}
+@keyframes ciSpin{to{transform:rotate(360deg)}}
+@keyframes ciDrift{from{transform:scale(1.02) translateY(1.5%)}to{transform:scale(1.16) translateY(-1%)}}
+@keyframes ciPush{from{transform:scale(1.1)}to{transform:scale(1.32) translateY(2%)}}
+@keyframes ciYear{from{opacity:0;transform:translateY(12px) scale(1.15)}to{opacity:1;transform:none}}
+@keyframes ciSway{0%,100%{transform:rotate(-1.6deg)}50%{transform:rotate(1.6deg)}}
+@keyframes ciHero{from{opacity:0;transform:translateX(-26px)}to{opacity:1;transform:none}}
+@keyframes ciGlow{0%,100%{opacity:.55}50%{opacity:1}}
+
+.ci-reel{justify-content:flex-end;align-items:center;font-family:"Palatino Linotype","Book Antiqua",Palatino,Georgia,serif}
+.ci-stage{position:absolute;inset:0;overflow:hidden;z-index:1;pointer-events:none}
+.ci-reel .cs-bar{display:block;z-index:6}
+.ci-lower{position:relative;z-index:7;width:100%;max-width:860px;padding:0 24px 11vh;display:flex;flex-direction:column;gap:12px;align-items:center;text-align:center}
+.ci-sub{margin:0;font-size:clamp(1.15rem,2.6vw,1.6rem);line-height:1.5;color:#eef1ef;text-shadow:0 2px 18px #000,0 0 3px #000}
+.ci-sub i{font-style:normal;display:inline-block;margin-right:.3em;opacity:0;animation:ciWord .7s ease-out forwards}
+.ci-who{display:block;letter-spacing:.34em;font-size:.62rem;font-weight:900;margin-bottom:6px;color:#9aa39a}
+.ci-m .ci-who{color:#d6b96c}.ci-m{color:#e7efe9}.ci-p .ci-who{color:#8cc9c3}.ci-n{font-style:italic;color:#aab3aa}
+.ci-skip{position:absolute!important;right:18px;bottom:calc(7vh + 10px);z-index:9}
+.ci-dots{position:absolute;left:50%;bottom:calc(7vh + 14px);transform:translateX(-50%);z-index:8}
+.ci-reel .cs-row.choices{min-height:0;margin-top:4px}
+
+/* shots */
+.ci-reel.hit .ci-stage,.ci-reel.hit2 .ci-stage,.ci-reel.shout .ci-stage{animation:ciShake .5s ease-out}
+.ci-fight{background:#000}
+.ci-vig{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 55%,transparent 20%,#000 82%)}
+.ci-pulse{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 60%,#5a0f14 0,transparent 60%);animation:ciBeat 1.5s ease-in-out infinite}
+.ci-slash{position:absolute;height:3px;width:120%;left:-10%;top:42%;background:linear-gradient(90deg,transparent,#ff5a5a,#fff,transparent);transform-origin:left;transform:scaleX(0);opacity:0;box-shadow:0 0 24px 6px #ff3b3b88}
+.ci-slash.a{transform:rotate(-14deg)}.ci-slash.b{top:56%;transform:rotate(9deg)}
+.ci-reel.hit .ci-slash.a,.ci-reel.hit2 .ci-slash.b{animation:ciSlash .45s ease-out}
+.ci-reel.hit .ci-stage::after,.ci-reel.hit2 .ci-stage::after{content:"";position:absolute;inset:0;background:#c82828;animation:ciFlashRed .6s ease-out forwards}
+.ci-reel.fade .ci-stage{animation:ciBlur 3.2s ease-in forwards}
+.ci-reel.fade .ci-pulse{animation-duration:2.6s}
+
+.ci-cell .ci-years{position:absolute;top:22%;left:0;right:0;text-align:center;z-index:3;color:#9fb3ab}
+.ci-years small{display:block;letter-spacing:.5em;font-size:.7rem;opacity:.6}.ci-years b{display:block;font-size:clamp(3rem,10vw,6rem);font-weight:300;font-family:ui-monospace,Menlo,Consolas,monospace;animation:ciYear .4s ease-out both;text-shadow:0 0 30px #7fb5b055}
+.ci-chain{position:absolute;top:0;width:6px;height:38vh;background:repeating-linear-gradient(#2a3230 0 10px,#0b0e0e 10px 14px);transform-origin:top;animation:ciSway 5s ease-in-out infinite;z-index:2;opacity:.8}
+.ci-chain.l{left:24%}.ci-chain.r{right:24%;animation-delay:-2s;height:30vh}
+.ci-drip{position:absolute;left:62%;top:20vh;width:5px;height:10px;border-radius:50%;background:#7fb5b0;animation:ciDrip 3.6s ease-in infinite;z-index:2}
+.ci-dust{position:absolute;bottom:-4vh;border-radius:50%;background:#cfe6df;opacity:0;animation:ciRise linear infinite;z-index:2}
+.ci-cell .cs-caption{margin-top:34vh}
+
+.ci-wrap{display:contents}
+.ci-throne{background:#050707}
+.ci-eclipse{position:absolute;left:50%;top:34%;width:min(62vh,70vw);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,#000 0 58%,#0a0f0e 59%,transparent 70%);box-shadow:0 0 120px 30px #b9a46a22}
+.ci-corona{position:absolute;left:50%;top:34%;width:min(78vh,86vw);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:conic-gradient(from 0deg,transparent,#d6b96c66,transparent 25%,#7fb5b044,transparent 55%,#d6b96c55,transparent 80%);-webkit-mask:radial-gradient(circle,transparent 55%,#000 57%,#000 66%,transparent 70%);mask:radial-gradient(circle,transparent 55%,#000 57%,#000 66%,transparent 70%);animation:ciSpin 40s linear infinite}
+.ci-monarque{position:absolute;left:50%;bottom:9vh;height:60vh;max-width:92vw;object-fit:contain;translate:-50% 0;filter:brightness(.55) drop-shadow(0 20px 50px #000);transition:filter .6s}
+.ci-monarque.speaking{filter:brightness(.95) drop-shadow(0 0 40px #d6b96c44)}
+
+.ci-ember{position:absolute;bottom:-3vh;border-radius:50%;background:#e8b86a;box-shadow:0 0 8px 2px #e8903a88;opacity:0;animation:ciRise linear infinite}
+.ci-lightfall{position:absolute;inset:0;background:linear-gradient(#e8f2ee 0,transparent 40%);opacity:.0;animation:ciFlashRed 2.4s ease-out}
+.ci-hero{position:absolute;left:clamp(14px,6vw,90px);bottom:calc(7vh + 150px);z-index:6;animation:ciHero .5s ease-out both;filter:drop-shadow(0 8px 20px #000)}
+.ci-hero .sm-portrait{box-shadow:0 0 0 2px #8cc9c3aa,0 0 36px #7fb5b055}
+@media(max-width:700px){.ci-hero{bottom:calc(7vh + 190px)}.ci-monarque{height:50vh}}
+@media (prefers-reduced-motion:reduce){.ci-sub i{animation:none;opacity:1}.ci-stage,.ci-corona,.ci-monarque,.ci-ember,.ci-dust,.ci-drip,.ci-chain,.ci-pulse{animation:none!important}.ci-reel .ci-stage::after{display:none}}
+
+/* ---- v2: layout fix (beat the older themed-screen rule), backdrops, title cards, camera ---- */
+main.cs-screen.ci-reel:not(.cs-black):not(.cs-cell){justify-content:flex-end;padding:0;background:#000}
+main.cs-screen.ci-reel:not(.cs-black):not(.cs-cell)::before,main.cs-screen.ci-reel:not(.cs-black):not(.cs-cell)::after{display:none}
+.ci-lower::before{content:"";position:fixed;left:0;right:0;bottom:0;height:46vh;background:linear-gradient(transparent,#000000d9 70%);z-index:-1;pointer-events:none}
+@keyframes ciTitle{0%{opacity:0;letter-spacing:.9em;filter:blur(10px)}30%,70%{opacity:1;letter-spacing:.38em;filter:none}100%{opacity:0;letter-spacing:.5em}}
+@keyframes ciBg{from{transform:scale(1.04)}to{transform:scale(1.22)}}
+@keyframes ciGhost{0%{opacity:0;transform:scale(1.1)}20%{opacity:.75}100%{opacity:0;transform:scale(.96)}}
+@keyframes ciReveal{from{transform:translateY(16vh) scale(1.12);filter:brightness(0)}to{transform:none;filter:brightness(.55)}}
+.ci-title{margin:0 0 38vh;max-width:92vw;font-size:clamp(1.3rem,3.6vw,2.6rem);font-weight:400;letter-spacing:.38em;color:#e7d9a6;text-shadow:0 0 40px #d6b96c88;animation:ciTitle 3.4s ease-in-out forwards;text-align:center}
+.ci-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:ciBg 30s ease-out forwards}
+.ci-bg.fight{filter:grayscale(.85) brightness(.35) contrast(1.2) sepia(.4) hue-rotate(-30deg)}
+.ci-bg.throne{filter:brightness(.4) saturate(.8) blur(2px)}
+.ci-ghost{position:absolute;top:14%;width:26%;max-width:320px;aspect-ratio:1;object-fit:cover;border-radius:50%;filter:grayscale(1) contrast(1.3) brightness(.9);opacity:0;mix-blend-mode:screen;animation:ciGhost 1.5s ease-out both}
+.ci-vig.soft{background:radial-gradient(ellipse at 50% 45%,transparent 35%,#000000b8 100%)}
+.ci-cam{position:absolute;inset:0;animation:ciDrift 24s ease-out forwards;transform-origin:50% 55%}
+.ci-reel.push .ci-cam{animation:ciPush 9s ease-out forwards}
+.ci-cam .ci-monarque{animation:ciReveal 4.5s ease-out both;transition:none}
+.ci-cam .ci-monarque.speaking{filter:brightness(.95) drop-shadow(0 0 40px #d6b96c44);animation:none}
+.ci-reel.lightfall .ci-lightfall{opacity:1}
+.ci-lightfall{background:linear-gradient(#e8f2ee,#e8f2eebb 40%,transparent);animation:ciFlashRed 2.6s ease-out forwards}
+.ci-throne .ci-skip{bottom:calc(7vh + 10px)}
+
+/* ---- Berserker intro / outro (Berserker.jsx) ---- */
+@keyframes cbPick{0%,40%{filter:grayscale(1) brightness(.4)}100%{filter:grayscale(.2) brightness(1.15) drop-shadow(0 0 24px #c8a050);transform:translateY(-14px) scale(1.12)}}
+@keyframes cbBeastIn{from{opacity:0;transform:translateY(30px) scale(.9);filter:grayscale(1) brightness(.3)}to{opacity:1;transform:none}}
+@keyframes cbQuake{0%,100%{transform:translate(0)}20%{transform:translate(-4px,3px)}40%{transform:translate(5px,-3px)}60%{transform:translate(-3px,-2px)}80%{transform:translate(3px,3px)}}
+@keyframes cbFall{0%{transform:none;filter:none;opacity:1}100%{transform:translateY(26px) scale(.74);filter:grayscale(1) brightness(.4);opacity:.85}}
+@keyframes cbOrb{0%,100%{transform:scale(.94);opacity:.8}50%{transform:scale(1.08);opacity:1}}
+@keyframes cbBeam{0%{opacity:0}30%{opacity:.8}100%{opacity:.35}}
+.ci-bg.berserk{filter:brightness(.35) saturate(.7) hue-rotate(-20deg)}
+.cb-tint{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 55%,transparent 20%,#02040800 40%,#000000a0);transition:background 1.2s}
+.cb-tint.red{background:radial-gradient(ellipse at 50% 55%,#6a0c1260 0,#2a050888 60%,#000000b8)}
+.cb-archive{position:absolute;left:0;right:0;top:20%;display:flex;justify-content:center;gap:clamp(8px,2vw,26px)}
+.cb-archive img{width:clamp(70px,10vw,140px);aspect-ratio:3/4;object-fit:cover;border-radius:10px;border:1px solid #c8a05044;filter:grayscale(1) brightness(.4);animation:csIn .8s ease-out both;animation-delay:calc(var(--i)*.18s)}
+.cb-archive img.pick{animation:cbPick 3.2s ease-in .6s forwards}
+.cb-beast{position:absolute;left:50%;top:50%;translate:-50% -56%;width:min(48vh,60vw);aspect-ratio:1;animation:cbBeastIn 1.6s ease-out both}
+.cb-beast img{width:100%;height:100%;object-fit:cover;border-radius:50%;border:3px solid #a55058;box-shadow:0 0 60px #c8282888}
+.cb-beast.sealed img{filter:grayscale(1) brightness(.55);border-color:#6c7a85;box-shadow:0 0 50px #4a5a6a88}
+.cb-beast.surge img,.cb-beast.awake img{filter:saturate(1.4) contrast(1.15) brightness(1.1);animation:cbQuake .35s linear infinite}
+.cb-beast.burn img{filter:saturate(1.5) contrast(1.2) brightness(1.15);animation:cbQuake .25s linear infinite}
+.cb-beast.fall{animation:cbFall 3.6s ease-in forwards}.cb-beast.fall img{filter:grayscale(.8) brightness(.6);border-color:#c8a050;box-shadow:0 0 40px #c8a05066}
+.cb-seal{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:6rem;color:#e7d9a6;text-shadow:0 0 30px #c8a050;font-style:normal;animation:csIn 1.8s ease-out .8s both}
+.cb-chain{position:absolute;left:-8%;right:-8%;height:7px;background:repeating-linear-gradient(90deg,#3a4650 0 14px,#10161b 14px 18px);box-shadow:0 0 12px #000}
+.cb-chain.a{top:34%;transform:rotate(-12deg)}.cb-chain.b{top:62%;transform:rotate(9deg)}
+.cb-gm{position:absolute;left:50%;top:46%;translate:-50% -50%;animation:csIn .8s ease-out both}.cb-gm .sm-portrait{box-shadow:0 0 60px #b9a46a88}
+.cb-gm.side{left:16%;top:42%;translate:0 -50%}
+.cb-beam{position:absolute;left:50%;top:0;bottom:0;width:min(30vw,260px);translate:-50% 0;background:linear-gradient(90deg,transparent,#ff3b3b55,transparent);filter:blur(8px);animation:cbBeam 2s ease-out forwards}
+.ci-ember.red{background:#ff5a4a;box-shadow:0 0 10px 3px #ff2a2a99}
+.cb-orb{position:absolute;left:50%;top:48%;translate:-50% -50%;width:min(34vh,44vw);aspect-ratio:1}
+.cb-orb i{position:absolute;inset:-24%;border-radius:50%;background:radial-gradient(circle,#ff7a4aaa 0,#c8282866 40%,transparent 70%);animation:cbOrb 2.2s ease-in-out infinite}
+.cb-orb img{position:relative;width:100%;height:100%;object-fit:cover;border-radius:50%;border:2px solid #ffb08a;filter:saturate(1.3) brightness(.9);mix-blend-mode:screen;opacity:.8}
+.ci-berserk{background:#000}
+@media (prefers-reduced-motion:reduce){.cb-beast img,.cb-orb i{animation:none!important}}
+.ci-berserk.hit .ci-stage::after,.ci-berserk.hit2 .ci-stage::after{background:#8a1418;animation-name:ciFlashSoft}
+@keyframes ciFlashSoft{0%{opacity:.5}100%{opacity:0}}
+
+/* ---- Finale cinematics (Final.jsx) ---- */
+@keyframes cfRing{from{transform:translate(-50%,-50%) scale(.1);opacity:.9}to{transform:translate(-50%,-50%) scale(3.2);opacity:0}}
+@keyframes cfCrack{0%{transform:scale(1);opacity:1;filter:none}60%{transform:scale(1.18);filter:brightness(2) sepia(1)}100%{transform:scale(1.5);opacity:0;filter:blur(6px) brightness(2)}}
+@keyframes cfRise{from{transform:translateY(0);opacity:1}to{transform:translateY(-60vh);opacity:0}}
+@keyframes cfFree{from{filter:grayscale(1) brightness(.4);transform:scale(.9)}to{filter:none;transform:none}}
+@keyframes cfAsh{0%{filter:brightness(.7);opacity:1}100%{filter:grayscale(1) brightness(.25) blur(3px);opacity:.15;transform:translateY(8vh) scale(.94)}}
+@keyframes cfWhite{0%{opacity:0}18%{opacity:1}100%{opacity:1}}
+@keyframes cfRaging{0%,100%{filter:brightness(.9) drop-shadow(0 0 40px #c8282888)}50%{filter:brightness(1.15) drop-shadow(0 0 70px #ff3b3baa)}}
+@keyframes cfStand{from{transform:translateY(14vh) scale(1.05);filter:brightness(.1)}to{transform:none;filter:brightness(.55)}}
+.ci-final{background:#000}
+.ci-monarque.fin.rising{animation:cfStand 3.8s ease-out both}
+.ci-cam .ci-monarque.fin.raging{animation:cfRaging 1.6s ease-in-out infinite}
+.ci-cam .ci-monarque.fin.kneeling{translate:-50% 6vh;filter:brightness(.7) saturate(1.3)}
+.ci-cam .ci-monarque.fin.shatter{animation:cfAsh 3.6s ease-in forwards}
+.ci-cam .ci-monarque.fin.ashen{animation:cfAsh 5s ease-in forwards}
+.cf-aion{position:absolute;inset:0}
+.cf-aion i{position:absolute;left:50%;top:44%;width:min(70vh,80vw);aspect-ratio:1;border-radius:50%;border:2px solid #d6c8ff;box-shadow:0 0 60px #9a8cff88,inset 0 0 60px #9a8cff55;animation:cfRing 5.4s ease-out infinite}
+.cf-aion b{position:absolute;left:50%;top:44%;translate:-50% -50%;font-size:clamp(2rem,7vw,5rem);font-weight:300;letter-spacing:.6em;color:#efe9ff;text-shadow:0 0 50px #b4a7ff;padding-left:.6em}
+.cf-crucible{position:absolute;left:0;right:0;top:9%;bottom:30%;display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:10px;padding:0 6vw;align-content:center}
+.cf-crucible img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:12px;filter:grayscale(1) brightness(.5);border:1px solid #c8a05055;animation:csIn .7s ease-out both;animation-delay:calc(var(--i)*.12s)}
+.cf-crucible.crucible2 img{filter:none;border-color:#e7c870;box-shadow:0 0 22px #c8a05088;transition:filter 2s;animation:csIn .7s ease-out both,cbOrb 2.2s ease-in-out infinite;animation-delay:calc(var(--i)*.12s),calc(var(--i)*.1s)}
+.cf-me{position:absolute;left:50%;top:50%;translate:-50% -50%;z-index:3;animation:csIn 1s ease-out both}.cf-me .sm-portrait{box-shadow:0 0 70px #e7c87088,0 0 0 3px #e7c870}
+.cf-me.center{top:42%}.cf-me.big{top:40%}
+.cf-blow{opacity:1;animation:ciSlash .6s ease-out both!important;top:40%;height:6px}
+.cf-whiteout{position:absolute;inset:0;background:#fff;z-index:5;opacity:0;animation:cfWhite 1.6s ease-out .45s forwards}
+.ci-bg.ending{filter:brightness(.3) saturate(.6) hue-rotate(10deg)}
+.ci-bg.ending.dawn{filter:brightness(.6) saturate(.9) sepia(.5) hue-rotate(-12deg);transition:filter 3s}
+.ci-ember.gold{background:#f1d68a;box-shadow:0 0 10px 3px #e7c87099}
+.cf-grid{position:absolute;left:0;right:0;top:12%;bottom:30%;display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:12px;padding:0 6vw;align-content:center}
+.cf-grid img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:12px;border:1px solid #e7c87088}
+.cf-grid.cards img{filter:grayscale(.9) brightness(.55);border-color:#8a6a2a;animation:cfCrack 2.6s ease-in forwards;animation-delay:calc(var(--i)*.1s + .6s)}
+.cf-grid.free img{animation:cfFree 3s ease-out both;animation-delay:calc(var(--i)*.1s);box-shadow:0 0 26px #f1d68a66}
+.cf-grid.depart img{box-shadow:0 0 26px #f1d68a66;animation:cfRise 6s ease-in forwards;animation-delay:calc(var(--i)*.14s + .4s)}
+.cf-dawn{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,#f6d78a99 0,#f6d78a22 40%,transparent 70%);animation:csFlood 3s ease-out both}
+.ci-ending .ci-lower .ci-sub{color:#f6efd8}
+@media(max-width:700px){.cf-crucible,.cf-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (prefers-reduced-motion:reduce){.cf-aion i,.ci-monarque.fin,.cf-grid img,.cf-crucible img{animation:none!important}}
+.cf-grid,.cf-crucible{grid-template-columns:repeat(8,min(9vw,11vh));justify-content:center;gap:1.2vh}
+@media(max-width:700px){.cf-crucible,.cf-grid{grid-template-columns:repeat(6,min(13vw,10vh))}}
+@keyframes cfWhite{0%{opacity:0}15%{opacity:1}100%{opacity:0}}
+.cf-whiteout{animation-duration:3.4s!important}
+
+/* ---- intro: the screen CLOSES (the reverse of the light flooding in), then plain black ---- */
+@keyframes ciLidTop{from{transform:translateY(-101%)}to{transform:translateY(0)}}
+@keyframes ciLidBottom{from{transform:translateY(101%)}to{transform:translateY(0)}}
+.ci-lid{position:absolute;left:-4%;width:108%;height:51%;background:#000;z-index:5;will-change:transform}
+.ci-lid.top{top:0;border-radius:0 0 50% 50%/0 0 14vh 14vh;box-shadow:0 12px 40px 14px #000;animation:ciLidTop 2.4s cubic-bezier(.55,0,.35,1) .3s both}
+.ci-lid.bottom{bottom:0;border-radius:50% 50% 0 0/14vh 14vh 0 0;box-shadow:0 -12px 40px 14px #000;animation:ciLidBottom 2.4s cubic-bezier(.55,0,.35,1) .3s both}
+.ci-reel.close .ci-stage{background:#000}
+@media (prefers-reduced-motion:reduce){.ci-lid{animation:none!important;transform:none}}
+/* the years: pure darkness, only the count and the caption */
+.ci-cell .cs-sliver{display:none!important}

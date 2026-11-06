@@ -1,0 +1,242 @@
+/* Final pass (loaded last): card faces, title, Monarque, selected card, round reveal. */
+
+/* ===== Card face: the art IS the card. Name + P/R sit on one slim strip at the bottom. ===== */
+.card:not(.card-back) { position: relative; padding: 0; overflow: hidden; }
+.card:not(.card-back) .card-image-wrap { position: absolute; inset: 0; height: auto !important; width: 100%; }
+.card:not(.card-back) .card-image-wrap img { width: 100%; height: 100%; object-fit: cover; }
+.card:not(.card-back) .card-info { position: absolute; left: 0; right: 0; bottom: 0; height: auto !important; padding: 20px 8px 5px !important; display: flex; flex-direction: column; gap: 0;
+  background: linear-gradient(to top, rgba(4,7,8,.9) 0, rgba(4,7,8,.78) 55%, rgba(4,7,8,0) 100%) !important; z-index: 2; }
+.card:not(.card-back) .card-info strong { font-size: 12px; line-height: 1.15; margin: 0; text-shadow: 0 1px 3px #000; }
+.card:not(.card-back) .card-info > span, .card:not(.card-back) .card-tier { display: none !important; }
+.card:not(.card-back) .card-stats { margin: 1px 0 0 !important; font-size: 12px; align-items: baseline; }
+.card:not(.card-back) .card-stats b { font-size: 12px; }
+.card:not(.card-back) .card-cost { z-index: 3; }
+/* art-less tile: initials sit in the upper area, clear of the strip */
+.card:not(.card-back) .card-art-fallback, .card:not(.card-back) .card-image-fallback { padding-bottom: 38px; }
+.card:not(.card-back) .card-art-fallback > span, .card:not(.card-back) .card-art-fallback > small { display: none !important; }
+.table-screen .player-hand .card { height: auto; aspect-ratio: 5 / 7; }
+
+/* middle table cards use the same face */
+.trick-area .trick-play .card { width: 100%; max-width: 190px; height: auto; aspect-ratio: 5 / 7; }
+
+/* ===== Titles: solid text. (clip-text + filter rendered as a blurry box in some browsers) ===== */
+.sm-title, .sm-roundhead h2, .sm-op-title h1 { background: none !important; -webkit-background-clip: border-box !important; background-clip: border-box !important; color: #eceee8 !important; -webkit-text-fill-color: #eceee8 !important; filter: none !important; text-shadow: 0 2px 0 #000, 0 4px 14px rgba(0,0,0,.9), 0 0 24px rgba(89,21,26,.55); }
+.sm-op-title small, .sm-roundhead small { color: #e9b3b9 !important; text-shadow: 0 1px 4px #000; }
+
+/* ===== Monarque: solid, large, no glow plate ===== */
+.table-screen .table-center .gm-emblem::before { display: none !important; }
+.table-screen .table-center .gm-emblem { width: clamp(230px, 18vw, 320px); height: clamp(150px, 17vh, 190px); top: clamp(-120px, -12vh, -96px) !important; opacity: 1 !important; }
+.table-screen .table-center .gm-emblem img { opacity: 1 !important; filter: drop-shadow(0 5px 10px rgba(0,0,0,.9)) !important; }
+.sm-op-throne img.monarque-art { opacity: 1 !important; filter: drop-shadow(0 8px 18px rgba(0,0,0,.9)) !important; }
+
+/* ===== Selected card: big clean face, no scrollbar ===== */
+.table-screen .selected-card-dock { overflow: hidden !important; justify-content: flex-start; }
+.table-screen .selected-card-dock .sel-art { width: min(100%, 210px); max-height: none; }
+.table-screen .selected-card-dock .boost-preview { display: flex; justify-content: space-between; }
+.table-screen .selected-card-dock .selected-controls { gap: 6px; }
+.table-screen .selected-card-dock .sel-face-stats { padding: 6px 12px 7px; font-size: 1rem; }
+
+/* Gather Soul now lives beside PLAY */
+.table-screen .gather-soul-button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; padding: 6px 8px; border-radius: 8px; cursor: pointer; font: 800 .74rem/1.1 var(--mq-serif, serif); letter-spacing: .08em; color: #e6e8e2; background: hsl(var(--ar-h) var(--ar-s) 14% / .8); border: 1px solid var(--panel-edge); }
+.table-screen .gather-soul-button small { font: 600 .62rem/1 sans-serif; letter-spacing: 0; color: #c9ccc4; }
+.table-screen .gather-soul-button:hover { background: hsl(var(--ar-h) var(--ar-s) 20% / .9); }
+
+/* ===== Story HUD: sits in the left rail directly under POWERS · ONE PER ROUND ===== */
+.sm-hud.in-rail { position: relative !important; top: auto !important; left: auto !important; width: 100% !important; max-width: none !important; box-sizing: border-box; margin-top: 8px; display: grid !important; grid-template-columns: 1fr auto; gap: 4px 10px; padding: 8px 10px !important; background: var(--panel) !important; border: 1px solid var(--panel-edge) !important; border-radius: 10px; z-index: 2; }
+.sm-hud.in-rail .sm-hud-banner { grid-column: 1; grid-row: 1; flex-wrap: wrap; row-gap: 3px; }
+.sm-hud.in-rail .sm-hud-round { font-size: .72rem; letter-spacing: .08em; }
+.sm-hud.in-rail .sm-hud-stake { grid-column: 1 / -1; grid-row: 3; font-size: .72rem; line-height: 1.25; }
+.sm-hud.in-rail .sm-hud-foe { grid-column: 2; grid-row: 1 / span 2; }
+.sm-hud.in-rail .sm-bubble { position: static !important; width: auto !important; grid-column: 1 / -1; font-size: .78rem; background: rgba(205,210,200,.92); color: #0b0f0f; padding: 6px 8px; border-radius: 6px; text-shadow: none; }
+.sm-hud.in-rail .sm-hud-powers { position: static !important; min-width: 0; grid-column: 1 / -1; background: transparent; padding: 2px 0 0; }
+.sm-hud.in-rail .sm-hud-toggle { grid-column: 1 / -1; }
+.opponent-rail { justify-content: flex-start !important; overflow: visible; }
+
+/* ===== Round reveal: names and stats only, winner rises, the rest settle back ===== */
+.round-result-panel { background: hsl(var(--ar-h, 187) 30% 7% / .72) !important; backdrop-filter: blur(6px); padding: 18px 26px 16px !important; max-width: min(1040px, 94vw); }
+.round-result-rows { display: flex; justify-content: center; gap: clamp(10px, 2vw, 26px); align-items: flex-end; }
+.round-result-row { width: clamp(128px, 14vw, 176px) !important; animation: rrRise .55s cubic-bezier(.2,.85,.25,1) both !important; animation-delay: calc(var(--i, 0) * 160ms) !important; }
+.round-result-row .card { width: 100% !important; height: auto !important; aspect-ratio: 5 / 7; animation: rrFlip .7s cubic-bezier(.2,.8,.2,1) both !important; animation-delay: calc(var(--i, 0) * 160ms + 150ms) !important; }
+.round-result-row .card .card-cost { display: none !important; }
+.round-result-row.place-1 { transform: translateY(-14px) scale(1.1); z-index: 2; }
+.round-result-row.place-1 .card { border: 2px solid #e3e6df !important; box-shadow: 0 0 34px rgba(227,230,223,.35), 0 12px 30px rgba(0,0,0,.6) !important; }
+.round-result-row:not(.place-1) { opacity: .92; }
+.round-result-row:last-child:not(.place-1) .card { filter: saturate(.7) brightness(.9); }
+.round-result-place { font: 800 1.25rem/1 var(--mq-serif, serif); letter-spacing: .08em; color: #cfd3cb; }
+.round-result-row.place-1 .round-result-place { color: #fff; text-shadow: 0 0 14px rgba(255,255,255,.5); }
+.round-result-name { font: 700 .95rem var(--mq-serif, serif); }
+.round-result-why, .round-result-footer { font-size: .85rem; opacity: .85; }
+@keyframes rrRise { from { opacity: 0; transform: translateY(26px) scale(.94); } to { opacity: 1; } }
+@keyframes rrFlip { 0% { transform: rotateY(90deg) scale(.9); opacity: 0; } 100% { transform: rotateY(0) scale(1); opacity: 1; } }
+.table-screen .selected-card-dock .sel-art .card-art-fallback > small { display: none !important; }
+.table-screen .table-center .gm-emblem { width: clamp(220px, 15vw, 270px); height: clamp(120px, 15vh, 150px); top: clamp(-92px, -9vh, -76px) !important; }
+.round-result-flip { width: 100%; }
+.round-result-row .round-result-flip .card { width: 100% !important; min-height: 0 !important; }
+.round-result-rows { align-items: flex-start; padding-top: 14px; }
+
+/* ===== round 5 ===== */
+/* avatars with a contender portrait */
+.opp2-avatar, .human-avatar { position: relative; overflow: hidden; }
+.avatar-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 2; }
+
+/* Selected card: face sized by height so the boost steppers always fit below it */
+.table-screen .selected-card-dock { overflow: visible !important; }
+.table-screen .selected-card-dock .sel-art { width: min(100%, calc(31vh * 5 / 7)); flex: none; }
+.table-screen .selected-card-dock .selected-controls, .table-screen .selected-card-dock .game-controls { flex: none; }
+
+/* Bottom-right actions: PLAY on top, Draw + Gather side by side, nothing overlapping */
+.table-screen .bottom-game-actions { display: grid !important; grid-template-columns: 1fr auto; gap: 8px; align-items: stretch; overflow: hidden; }
+.table-screen .bottom-primary-actions { display: grid !important; grid-template-columns: 1fr 1fr; grid-auto-rows: min-content; gap: 6px; align-content: stretch; min-width: 0; }
+.table-screen .bottom-primary-actions .bottom-play-button { grid-column: 1 / -1; height: 44px; min-height: 0; }
+.table-screen .bottom-primary-actions .bottom-draw-control { grid-column: 1; min-width: 0; height: auto !important; position: static !important; }
+.table-screen .bottom-primary-actions .bottom-draw-control .game-controls, .table-screen .bottom-primary-actions .bottom-draw-control .selected-controls { position: static !important; height: auto !important; padding: 0 !important; gap: 2px; }
+.table-screen .bottom-primary-actions .bottom-draw-control button { width: 100%; min-height: 32px; font-size: .78rem; }
+.table-screen .bottom-primary-actions .draw-status, .table-screen .bottom-primary-actions .bottom-draw-control small { display: block; font-size: .6rem; line-height: 1.15; white-space: normal; position: static !important; margin: 0; }
+.table-screen .bottom-primary-actions .gather-soul-button { grid-column: 2; align-self: start; min-height: 32px; padding: 3px 4px; }
+.table-screen .bottom-primary-actions .gather-soul-button:only-of-type { grid-column: 2; }
+
+/* Story: Enter the Citadel, half width; smooth detail change; Monarque face */
+.sm-btn.sm-enter { width: 50%; min-width: 190px; align-self: center; margin-top: 6px; }
+.sm-detail .sm-detail-in { display: flex; flex-direction: column; align-items: center; gap: 8px; animation: smDetailIn .45s cubic-bezier(.2,.8,.2,1) both; }
+.sm-detail .sm-portrait { animation: none !important; }
+.sm-detail .sm-portrait img.sm-art { animation: smArtIn .5s ease both; }
+.sm-tile { transition: transform .18s ease, background .25s ease, border-color .25s ease, box-shadow .25s ease; }
+.sm-tile:hover { transform: translateY(-2px); }
+.sm-tile.on { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,.5), 0 0 0 1px #d6d9d1; }
+@keyframes smDetailIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes smArtIn { from { opacity: 0; transform: scale(1.06); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
+.sm-portrait.is-gm { background: radial-gradient(circle at 50% 60%, #1b2a2a, #070a0a); }
+.sm-portrait .sm-gm-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: 3px; }
+
+.sm-btn.sm-enter { width: 55%; min-width: 0; white-space: nowrap; font-size: .85rem; letter-spacing: .12em; padding-inline: 10px; }
+
+/* ===== Round reveal: the original panel (POWER CALL, 1st..4th in a row). Cards: art + name + P + R + Soul cost only. ===== */
+.round-result-row .card { width: 150px !important; height: auto !important; aspect-ratio: 5 / 7; }
+.round-result-row .card .card-cost { display: flex !important; }
+.round-result-row .card .card-info { padding-top: 22px !important; }
+/* ===== round 6 ===== */
+.sm-detail .sm-btn.sm-enter { width: 50% !important; min-width: 0 !important; align-self: center !important; flex: none !important; white-space: nowrap; font-size: .8rem; letter-spacing: .1em; padding: 10px 8px; }
+
+/* Story HUD: compact; the quote floats to the right of the rail instead of growing it */
+.sm-hud.in-rail { padding: 6px 8px !important; gap: 2px 8px; z-index: 40; }
+.sm-hud.in-rail .sm-hud-round { font-size: .62rem !important; line-height: 1.2; letter-spacing: .06em; }
+.sm-hud.in-rail .sm-hud-stake { font-size: .62rem; line-height: 1.2; opacity: .85; }
+.sm-hud.in-rail .sm-hud-foe .sm-portrait { width: 34px !important; height: 34px !important; font-size: 12px !important; }
+.sm-hud.in-rail .sm-hud-foe-meta b { font-size: .72rem; } .sm-hud.in-rail .sm-hud-foe-meta small { font-size: .58rem; line-height: 1.15; }
+.sm-hud.in-rail .sm-hud-toggle { font-size: .62rem; padding: 0; }
+.sm-hud.in-rail { position: relative !important; }
+.sm-hud.in-rail .sm-bubble { position: absolute !important; left: 0; right: 0; top: calc(100% + 6px); width: auto !important; grid-column: auto; z-index: 60; box-shadow: 0 6px 20px rgba(0,0,0,.6); font-size: .78rem; }
+.sm-hud.in-rail .sm-hud-powers { position: absolute !important; left: 0; right: 0; top: 100%; z-index: 60; background: hsl(var(--ar-h) var(--ar-s) 9% / .94); padding: 6px 10px; border-radius: 0 0 8px 8px; }
+
+/* Bottom-right actions: three clean cells */
+.table-screen .bottom-game-actions { grid-template-columns: minmax(0, 1fr) 76px !important; padding: 8px !important; }
+.table-screen .bottom-primary-actions { grid-template-columns: 1fr 1fr !important; grid-template-rows: 44px auto !important; gap: 6px !important; align-content: start; }
+.table-screen .bottom-primary-actions .bottom-draw-control { display: flex; flex-direction: column; gap: 3px; }
+.table-screen .bottom-primary-actions .draw-button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0; height: 44px; padding: 2px 4px; line-height: 1.1; }
+.table-screen .bottom-primary-actions .draw-button b { font-size: .8rem; } .table-screen .bottom-primary-actions .draw-button span { font-size: .62rem; opacity: .8; }
+.table-screen .bottom-primary-actions .draw-status { text-align: center; font-size: .6rem; opacity: .8; }
+.table-screen .bottom-primary-actions .gather-soul-button { height: 44px; min-height: 0; justify-content: center; }
+.table-screen .bottom-primary-actions .gather-soul-button small { white-space: nowrap; }
+
+/* Selected card: use the free space, a taller face */
+.table-screen .selected-card-dock .sel-art { width: min(100%, calc(40vh * 5 / 7)); }
+
+/* ===== round 8: smaller round-result reveal (sized by viewport height so zoomed / short windows stay compact) ===== */
+.round-result-panel { padding: 12px 20px 10px !important; max-width: min(780px, 92vw) !important; }
+.round-result-label { font-size: 11px !important; margin-bottom: 6px !important; }
+.round-result-rows { gap: clamp(8px, 1.4vw, 18px) !important; padding-top: 8px !important; }
+.round-result-row { width: clamp(88px, 15vh, 124px) !important; gap: 4px !important; }
+.round-result-row .card { width: 100% !important; font-size: clamp(9px, 1.3vh, 12px); }
+.round-result-row .card .card-info { padding: 14px 6px 5px !important; }
+.round-result-row .card .card-cost { transform: scale(.8); transform-origin: top left; }
+.round-result-row.place-1 { transform: translateY(-6px) scale(1.06); }
+.round-result-place { font-size: clamp(.8rem, 1.7vh, 1rem) !important; }
+.round-result-row.place-1 .round-result-place { font-size: clamp(.95rem, 2.1vh, 1.25rem) !important; }
+.round-result-name { font-size: clamp(.68rem, 1.5vh, .82rem) !important; }
+.round-result-deltas { font-size: 10px !important; gap: 4px !important; }
+.round-result-why, .round-result-footer { font-size: clamp(.68rem, 1.45vh, .78rem) !important; margin-top: 4px !important; }
+
+/* ===== round 9: readable text on see-through panels, thin edges on everything, bordered table cards, preview fits its image ===== */
+:root { --edge: rgba(176, 182, 172, .42); --edge-hi: rgba(214, 219, 209, .7); }
+.table-screen .header-chip, .table-screen .opp2, .table-screen .wildcard-action-panel, .table-screen .coach-bar, .table-screen .selected-card-dock,
+.table-screen .human-profile, .table-screen .player-hand-wrap, .table-screen .bottom-game-actions, .table-screen .trick-area, .table-screen .turn-badge,
+.table-screen .hp-meter, .table-screen .ki-meter, .table-screen .sm-hud, .table-screen .opp2-avatar, .table-screen .game-sort, .table-screen .sort-panel {
+  border: 1px solid var(--edge) !important; border-radius: 12px; box-shadow: 0 0 0 1px rgba(0,0,0,.45), 0 6px 18px rgba(0,0,0,.35);
+}
+/* the panels stay see-through, but their text sits on its own dark halo so it never mixes with the art */
+.table-screen { color: #eef0ea; }
+.table-screen :where(.opp2, .wildcard-action-panel, .coach-bar, .selected-card-dock, .human-profile, .bottom-game-actions, .header-chip, .turn-badge, .sm-hud, .trick-area, .game-sort) :where(strong, b, span, small, p, em, h2, h3, label, button) {
+  text-shadow: 0 1px 2px #000, 0 0 6px rgba(0,0,0,.95), 0 0 14px rgba(0,0,0,.75);
+}
+.table-screen :where(.opp2, .human-profile, .wildcard-action-panel, .selected-card-dock, .bottom-game-actions) { background-image: linear-gradient(rgba(4,8,9,.34), rgba(4,8,9,.34)); }
+.table-screen .opp2 :where(small, .opp2-status, .opp2-hp-label), .table-screen .human-profile :where(small, span), .table-screen .wildcard-action-panel :where(small, p) { color: #dfe3db; opacity: 1; }
+.table-screen .opp-badge { border: 1px solid var(--edge-hi) !important; background: rgba(5,10,11,.72) !important; color: #f0f2ec; }
+.table-screen .selected-card-dock :where(label, small, span) { color: #e6e9e1; }
+/* meters and buttons */
+.table-screen button:not(.card):not(.cpv-close) { border: 1px solid var(--edge) ; }
+.table-screen .hp-meter i, .table-screen .ki-meter i { box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); }
+/* cards played to the middle: always framed so they cannot melt into the artwork */
+.table-screen .trick-slot > .card, .table-screen .trick-slot .card, .table-screen .trick-slot .card-back {
+  border: 1.5px solid var(--edge-hi) !important; border-radius: 10px; box-shadow: 0 0 0 1px rgba(0,0,0,.7), 0 8px 22px rgba(0,0,0,.6) !important; overflow: hidden;
+}
+.table-screen .trick-slot:empty, .table-screen .trick-slot .empty, .table-screen .trick-slot .slot-empty, .table-screen .trick-slot > div:not(.card) { border-radius: 10px; }
+.table-screen .trick-slot { border: 1px dashed var(--edge); border-radius: 12px; background: rgba(6,12,13,.28); }
+/* hand + dock cards */
+.table-screen .player-hand .card { border: 1.5px solid var(--edge) !important; box-shadow: 0 0 0 1px rgba(0,0,0,.6) !important; }
+.table-screen .player-hand .card.selected, .table-screen .player-hand .card.is-selected { border-color: #e6e9e1 !important; }
+.table-screen .selected-card-dock .sel-art, .table-screen .selected-card-dock img { border: 1px solid var(--edge-hi); border-radius: 10px; }
+/* story + shop + setup surfaces */
+.sm-panel, .sm-tile, .sm-claim, .sm-hud, .su-panel, .su-seat, .su-hall, .shop-card, .shop-sidebar, .shop-toolbar { border: 1px solid var(--edge) !important; }
+.sm-hud :where(strong, b, span, small, p), .sm-panel :where(p, small, span, li) { text-shadow: 0 1px 2px #000, 0 0 8px rgba(0,0,0,.9); }
+
+/* card preview: the frame hugs the (square) art instead of a tall 3:4 box with empty bands */
+.cpv-card { aspect-ratio: 1 / 1 !important; width: min(80vw, 420px, calc(100vh - 260px)) !important; }
+.cpv-face { border: 1px solid var(--edge-hi) !important; }
+.cpv-front img, .cpv-front .card-art-fallback { object-fit: cover !important; }
+.cpv-back { padding: 16px !important; overflow-y: auto; justify-content: flex-start !important; }
+
+/* ===== opponent table talk: a framed quote over the lower half of the seat's panel ===== */
+.opp2 { position: relative; }
+.opp2-speech { position: absolute; left: 6px; right: 6px; bottom: 6px; z-index: 30; display: block; padding: 8px 12px 8px 22px; border-radius: 10px; border: 1px solid var(--edge-hi, #cfd3cb); background: rgba(6, 11, 12, .94); color: #f1f3ee; font: italic 600 .8rem/1.3 var(--mq-serif, Georgia, serif); text-shadow: none; box-shadow: 0 6px 18px rgba(0,0,0,.6); quotes: none; animation: oppSay .28s ease-out both; pointer-events: none; }
+.opp2-speech::before { content: '“'; position: absolute; left: 8px; top: 2px; font-size: 1.5rem; line-height: 1; color: #8fb0ac; }
+.opp2-speech.mood-angry, .opp2-speech.mood-desperate, .opp2-speech.mood-frustrated { border-color: #8a2a32; }
+.opp2-speech.mood-fear, .opp2-speech.mood-worried, .opp2-speech.mood-defeated { border-color: #52716f; color: #cfdad8; }
+.opp2-speech.mood-smug, .opp2-speech.mood-joy { border-color: #b9bdb5; }
+@keyframes oppSay { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* ===== opponent bubbles: emoji, tap-to-react, and they stay until the round is decided ===== */
+.opp2-speech { pointer-events: auto; padding: 0; font-size: .76rem; }
+.opp2-speech::before { content: none; }
+.opp2-speech-hit { all: unset; box-sizing: border-box; display: flex; align-items: flex-start; gap: 8px; width: 100%; padding: 7px 12px 7px 10px; cursor: pointer; border-radius: 10px; font: inherit; color: inherit; }
+.opp2-speech-hit:disabled { cursor: default; }
+.opp2-speech-hit:focus-visible { outline: 2px solid #8fb0ac; outline-offset: 1px; }
+.opp2-emo { flex: 0 0 auto; font-size: 1.25rem; line-height: 1.1; font-style: normal; filter: drop-shadow(0 1px 2px rgba(0,0,0,.6)); }
+.opp2-text { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; min-width: 0; }
+.opp2-text::before { content: '“'; color: #8fb0ac; }
+.opp2-text::after { content: '”'; color: #8fb0ac; }
+.opp2-speech.emo-only { right: auto; left: 6px; width: auto; min-width: 54px; }
+.opp2-speech.emo-only .opp2-speech-hit { justify-content: center; padding: 5px 12px; }
+.opp2-speech.emo-only .opp2-emo { font-size: 1.7rem; }
+.opp2-speech:not(.open):hover { border-color: #cfd3cb; }
+.opp2-yours { position: absolute; right: -8px; top: -12px; font-size: 1rem; line-height: 1; padding: 3px 4px; border-radius: 999px; background: rgba(6, 11, 12, .96); border: 1px solid #52716f; animation: oppSay .25s ease-out both; }
+.emote-tray { position: absolute; left: 0; right: 0; bottom: calc(100% + 6px); z-index: 40; display: grid; grid-template-columns: repeat(6, 1fr); gap: 3px; padding: 6px; border-radius: 10px; border: 1px solid var(--edge-hi, #cfd3cb); background: rgba(6, 11, 12, .97); box-shadow: 0 8px 22px rgba(0,0,0,.7); font-style: normal; animation: oppSay .18s ease-out both; }
+.emote-tray button { all: unset; box-sizing: border-box; display: grid; place-items: center; min-height: 30px; font-size: 1.05rem; line-height: 1; border-radius: 8px; cursor: pointer; background: rgba(255,255,255,.05); }
+.emote-tray button:hover, .emote-tray button:focus-visible { background: rgba(143, 176, 172, .28); outline: none; transform: translateY(-1px); }
+.emote-tray button:active { transform: scale(.92); }
+
+/* Story Mode: the foe's voice in the header is a button now */
+.sm-voice-wrap { position: relative; min-width: 0; display: flex; }
+.sm-voice-text { all: unset; box-sizing: border-box; cursor: pointer; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; min-width: 0; max-width: calc(var(--voice-room, 340px) - 56px); padding: 5px 10px; border-radius: 4px; border: 2px solid #060909; background: #cbcfc9; color: #0e1415; font-weight: 700; font-size: clamp(.7rem, .78vw, .84rem); line-height: 1.22; box-shadow: 0 6px 18px rgba(0, 0, 0, .7); animation: smVoiceIn .25s ease-out; }
+.sm-voice-text:disabled { cursor: default; }
+.sm-voice-text:focus-visible { outline: 2px solid #0e1415; outline-offset: 2px; }
+.sm-voice-text.mood-fear, .sm-voice-text.mood-desperate { background: #c1cfce; }
+.sm-voice-text.mood-angry, .sm-voice-text.mood-frustrated { background: #be5a64; }
+.sm-voice-text.mood-joy, .sm-voice-text.mood-smug { background: #b3b8af; }
+.sm-emo { font-size: 1.15em; margin-right: 6px; font-style: normal; }
+.sm-voice-text.emo-only .sm-emo { font-size: 1.6em; margin: 0; }
+.sm-yours { position: absolute; right: -8px; top: -12px; font-size: .95rem; line-height: 1; padding: 3px 4px; border-radius: 999px; background: #0e1415; border: 1px solid #52716f; }
+.sm-tray { top: auto; bottom: calc(100% + 6px); right: auto; left: 0; display: flex; flex-wrap: wrap; width: max-content; max-width: min(520px, 92vw); z-index: 150; }
+.sm-tray button { width: 28px; min-height: 28px; }
+.sm-voice.voice-tight .sm-voice-wrap { position: absolute; left: 0; top: calc(100% + 6px); width: min(340px, 42vw); z-index: 140; }
+.sm-voice.voice-tight .sm-voice-wrap .sm-voice-text { position: static; width: 100%; max-width: none; }
+@media (prefers-reduced-motion: reduce) { .opp2-speech, .opp2-yours, .emote-tray { animation: none; } }

@@ -1,0 +1,7 @@
+{
+  "appId": "com.monarque.cardsofthefallen",
+  "appName": "Monarque: Cards of the Fallen",
+  "webDir": "dist",
+  "backgroundColor": "#080b0c",
+  "android": { "allowMixedContent": false }
+}

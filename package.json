@@ -1,0 +1,55 @@
+{
+  "name": "monarque-cards-of-the-fallen",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "validate:cards": "node scripts/validate-cards.mjs",
+    "test:survival": "node scripts/test-survival-engine.mjs",
+    "test": "npm run build:data && npm run validate:cards && npm run validate:monarque && npm run audit:legacy && npm run test:survival && npm run test:special && npm run test:soul && npm run test:facts && npm run test:gather && npm run test:ai && npm run test:regressions && npm run test:story && npm run test:temperament && npm run test:trials && npm run test:adapt && npm run test:emotes && npm run test:tutorial && npm run test:storage && npm run test:difficulty && npm run test:twists && npm run test:tactics && npm run test:drama && npm run test:rewards",
+    "test:special": "node scripts/test-special-mechanics.mjs",
+    "test:soul": "node scripts/test-soul-costs.mjs",
+    "test:facts": "node scripts/test-power-facts.mjs",
+    "test:gather": "node scripts/test-gather-soul.mjs",
+    "test:ai": "node scripts/test-ai-simulations.mjs",
+    "test:regressions": "node scripts/test-regressions.mjs",
+    "sim:ai": "node scripts/sim-ai.mjs 60 4",
+    "test:temperament": "node scripts/test-temperament.mjs",
+    "test:trials": "node scripts/test-trials.mjs",
+    "test:adapt": "node scripts/test-adaptation.mjs",
+    "test:emotes": "node scripts/test-emotes.mjs",
+    "test:tutorial": "node scripts/test-tutorial.mjs",
+    "test:story": "node scripts/test-story.mjs && node scripts/test-story-flow.mjs",
+    "build:data": "node scripts/build-monarque-data.mjs",
+    "validate:monarque": "node scripts/validate-monarque-data.mjs",
+    "audit:legacy": "node scripts/legacy-audit.mjs",
+    "sim:story": "node scripts/sim-story.mjs 70",
+    "sim:final": "node scripts/sim-final.mjs",
+    "sim:balance": "node scripts/sim-balance.mjs",
+    "test:storage": "node scripts/test-storage.mjs",
+    "test:difficulty": "node scripts/test-difficulty.mjs",
+    "test:twists": "node scripts/test-twists.mjs",
+    "test:tactics": "node scripts/test-tactics.mjs",
+    "test:drama": "node scripts/test-drama.mjs",
+    "test:rewards": "node scripts/test-rewards.mjs",
+    "android:sync": "vite build && cap sync android",
+    "android:open": "cap open android"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^6.1.1",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "vite": "^8.3.2",
+    "@capacitor/core": "^7.0.0",
+    "@capacitor/android": "^7.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.0.0"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  }
+}

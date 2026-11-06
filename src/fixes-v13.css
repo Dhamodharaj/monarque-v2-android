@@ -1,0 +1,37 @@
+/* v13 fixes: powers strip uses arrow buttons instead of a scrollbar; Last-power chips beside the Monarque chip. */
+.table-screen .power-strip { position: relative; display: flex; flex: 1 1 auto; min-height: 0; min-width: 0; align-items: stretch; }
+.table-screen .power-strip .wildcard-action-list {
+  flex: 1 1 auto; min-width: 0; overflow-x: auto !important; overflow-y: hidden !important; scrollbar-width: none !important; -ms-overflow-style: none;
+  scroll-snap-type: x proximity; padding-bottom: 0 !important;
+}
+.table-screen .power-strip .wildcard-action-list::-webkit-scrollbar { display: none !important; width: 0; height: 0; }
+.table-screen .power-strip .wildcard-action { scroll-snap-align: start; }
+.table-screen .power-strip-nav {
+  display: none; position: absolute; top: 50%; transform: translateY(-50%); z-index: 5; width: 22px; height: 22px; padding: 0; border-radius: 50%;
+  border: 1px solid rgba(228, 231, 231, .4); background: rgba(8, 14, 15, .88); color: #e4e7e7; font: 700 15px/1 'Segoe UI', sans-serif; cursor: pointer; align-items: center; justify-content: center;
+}
+.table-screen .power-strip.is-scrollable .power-strip-nav { display: inline-flex; }
+.table-screen .power-strip-nav.prev { left: -4px; } .table-screen .power-strip-nav.next { right: -4px; }
+.table-screen .power-strip-nav:hover:not(:disabled) { background: rgba(60, 96, 98, .95); }
+.table-screen .power-strip-nav:disabled { opacity: .3; cursor: default; }
+
+/* Chips in the corner: Monarque's last decree, and the opponent's last power. */
+.special-chip .special-chip-tag {
+  position: absolute; left: 50%; bottom: -7px; transform: translateX(-50%); padding: 0 5px; border-radius: 6px; background: #8c2b36; color: #fff;
+  font: 800 8px/13px 'Segoe UI', sans-serif; letter-spacing: .08em; pointer-events: none;
+}
+.special-chip.foe { border-color: #c4565f; box-shadow: 0 0 12px rgba(196, 86, 95, .6); }
+.special-chip-tip { max-width: 300px; }
+
+/* Battle Mode Edicts: the button is just the artwork (name, cost and status live in the tooltip and the Edict sheet). */
+.table-screen .wildcard-action.edict-image-only { padding: 3px; gap: 0; }
+.table-screen .wildcard-action.edict-image-only .wildcard-action-image { flex: 1 1 auto; width: 100%; height: 100%; min-height: 48px; object-fit: cover; border-radius: 5px; }
+
+/* Soundtrack credit (licence requirement): quiet line under the author credit on the menu and the ending. */
+.music-credit { position: absolute; left: 0; right: 0; bottom: calc(max(14px, env(safe-area-inset-bottom, 0px)) + 24px); margin: 0; text-align: center; z-index: 3; font-size: .7rem; letter-spacing: .14em; color: rgba(200, 205, 196, .62); pointer-events: none; }
+.sm-credit .sm-music-credit { display: block; margin-top: .45rem; font-size: .66rem; letter-spacing: .14em; text-transform: none; color: #7f877b; }
+
+/* Gather Soul stays visible; dimmed with the reason when it cannot be used */
+.table-screen .gather-soul-button.is-disabled, .table-screen .gather-soul-button:disabled { opacity: .5; cursor: not-allowed; filter: saturate(.5); }
+.table-screen .gather-soul-button:disabled:hover { background: inherit; }
+.table-screen .gather-soul-button .gather-why { font-size: .56rem; color: #e8c9a0; font-style: italic; }

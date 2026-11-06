@@ -1,0 +1,292 @@
+[
+  {
+    "id": "edict-last-draught",
+    "character": "Monarque",
+    "form": "Recovery",
+    "title": "The Last Draught",
+    "description": "Monarque restores himself. +25 HP, +5 Soul, and every cooldown shortens by 1.",
+    "flavor": "He pours it out the way one pours for the dead.",
+    "series": "SPECIAL",
+    "category": "WILDCARD",
+    "rarity": "SPECIAL",
+    "subtype": "EDICT",
+    "image": "/story/edicts/last-draught.webp",
+    "type": "WILDCARD",
+    "cardClass": "MONARQUE_EDICT",
+    "effectId": "LAST_DRAUGHT",
+    "powerGroup": null,
+    "power": null,
+    "rank": null,
+    "unique": true,
+    "rules": {
+      "hp": 25,
+      "soul": 5,
+      "cdReduce": 1
+    },
+    "finaleBouts": [
+      1,
+      2,
+      3
+    ],
+    "monarqueLines": {
+      "early": "I restore what I choose to restore. Continue.",
+      "fraying": "Even a fraying king mends himself. Watch."
+    },
+    "soundCue": "drainPour",
+    "artDirection": "A tarnished-gold chalice tilting over black stone; the liquid is smoke-dark, not red."
+  },
+  {
+    "id": "edict-the-reckoning",
+    "character": "Monarque",
+    "form": "Burst",
+    "title": "The Reckoning",
+    "description": "Monarque breaks his own seal. He loses 15 HP, every other vessel loses 17 HP, and the round ends at once.",
+    "flavor": "A king who will not be beaten will end the room instead.",
+    "series": "SPECIAL",
+    "category": "WILDCARD",
+    "rarity": "SPECIAL",
+    "subtype": "EDICT",
+    "image": "/story/edicts/the-reckoning.webp",
+    "type": "WILDCARD",
+    "cardClass": "MONARQUE_EDICT",
+    "effectId": "THE_RECKONING",
+    "powerGroup": null,
+    "power": null,
+    "rank": null,
+    "unique": true,
+    "rules": {
+      "selfHp": 15,
+      "othersHp": 17,
+      "endsRound": true
+    },
+    "finaleBouts": [
+      1,
+      2
+    ],
+    "monarqueLines": {
+      "early": "The rite ends. Everything ends when I decide.",
+      "fraying": "Ruin it all. I will still stand in the ashes."
+    },
+    "soundCue": "hollowImpact",
+    "artDirection": "A cracked ring of ash around a single standing figure; fissures run outward through the floor."
+  },
+  {
+    "id": "edict-inverted-realm",
+    "character": "Monarque",
+    "form": "Reversal",
+    "title": "The Inverted Realm",
+    "description": "The lower stat wins for 2 rounds. Weakness is crowned, and strength is a debt.",
+    "flavor": "Down is a direction only if someone is still standing on it.",
+    "series": "SPECIAL",
+    "category": "WILDCARD",
+    "rarity": "SPECIAL",
+    "subtype": "EDICT",
+    "image": "/story/edicts/inverted-realm.webp",
+    "type": "WILDCARD",
+    "cardClass": "MONARQUE_EDICT",
+    "effectId": "INVERTED_REALM",
+    "powerGroup": null,
+    "power": null,
+    "rank": null,
+    "unique": true,
+    "rules": {
+      "rounds": 2,
+      "lowerWins": true
+    },
+    "finaleBouts": [
+      1,
+      2,
+      3
+    ],
+    "monarqueLines": {
+      "early": "Now the order turns over. Climb, if you can.",
+      "fraying": "Down is up. Up is whatever I decree."
+    },
+    "soundCue": "stoneTurn",
+    "artDirection": "A black cathedral shown upside down, chandeliers rising like roots, the vessel's shadow upright."
+  },
+  {
+    "id": "edict-blinding-eclipse",
+    "character": "Monarque",
+    "form": "Blind play",
+    "title": "The Blinding Eclipse",
+    "description": "Opponents must play blind this round. They choose a card without knowing which is which.",
+    "flavor": "The light is not removed. You are merely taken out of it.",
+    "series": "SPECIAL",
+    "category": "WILDCARD",
+    "rarity": "SPECIAL",
+    "subtype": "EDICT",
+    "image": "/story/edicts/blinding-eclipse.webp",
+    "type": "WILDCARD",
+    "cardClass": "MONARQUE_EDICT",
+    "effectId": "BLINDING_ECLIPSE",
+    "powerGroup": null,
+    "power": null,
+    "rank": null,
+    "unique": true,
+    "rules": {
+      "rounds": 1,
+      "oppBlind": true
+    },
+    "finaleBouts": [
+      1,
+      2,
+      3
+    ],
+    "monarqueLines": {
+      "early": "Choose without sight. Prove you deserve the light.",
+      "fraying": "Darkness suits a throne. Fight blind, vessel."
+    },
+    "soundCue": "lightDrain",
+    "artDirection": "A black disc swallowing a tarnished-gold halo; cards below it drawn as faint outlines only."
+  },
+  {
+    "id": "edict-oracle-gaze",
+    "character": "Monarque",
+    "form": "Insight",
+    "title": "The Oracle’s Gaze",
+    "description": "Monarque reads the vessel: its Soul reserve and its strongest cards. The report is private and expires next round.",
+    "flavor": "He does not guess. He remembers how this ends.",
+    "series": "SPECIAL",
+    "category": "WILDCARD",
+    "rarity": "SPECIAL",
+    "subtype": "EDICT",
+    "image": "/story/edicts/oracle-gaze.webp",
+    "type": "WILDCARD",
+    "cardClass": "MONARQUE_EDICT",
+    "effectId": "ORACLE_GAZE",
+    "powerGroup": null,
+    "power": null,
+    "rank": null,
+    "unique": true,
+    "rules": {
+      "reveals": [
+        "soul",
+        "bestPower",
+        "bestRank"
+      ],
+      "expires": "nextRound"
+    },
+    "finaleBouts": [
+      1,
+      2,
+      3
+    ],
+    "monarqueLines": {
+      "early": "I see your whole hand. Try to surprise me.",
+      "fraying": "I see all of it. Enough to crush you."
+    },
+    "soundCue": "eyeOpen",
+    "artDirection": "A single vellum eye bound with iron thread, the pupil a slow candle flame."
+  },
+  {
+    "id": "edict-monarque-boon",
+    "character": "Monarque",
+    "form": "Boon",
+    "title": "Monarque’s Boon",
+    "description": "For 4 Soul, Monarque grants himself one boon: Immortality (no HP damage for 2 rounds), Absolute Power (the card's chosen stat is doubled) or The Unmaking (every opponent loses a card).",
+    "flavor": "A god's wish costs less than a mortal's, and takes more.",
+    "series": "SPECIAL",
+    "category": "WILDCARD",
+    "rarity": "SPECIAL",
+    "subtype": "EDICT",
+    "image": "/story/edicts/monarque-boon.webp",
+    "type": "WILDCARD",
+    "cardClass": "MONARQUE_EDICT",
+    "effectId": "MONARQUE_BOON",
+    "powerGroup": null,
+    "power": null,
+    "rank": null,
+    "unique": true,
+    "rules": {
+      "soulCost": 4,
+      "boons": [
+        "IMMORTALITY",
+        "ABSOLUTE_POWER",
+        "THE_UNMAKING"
+      ],
+      "immortalityRounds": 2
+    },
+    "finaleBouts": [
+      1
+    ],
+    "monarqueLines": {
+      "early": "Three wishes lie before me. I need only one.",
+      "fraying": "A wish. Mine to grant, and mine to take."
+    },
+    "soundCue": "boonOpen",
+    "artDirection": "Three sealed doors of bone and bronze, one ajar, no light behind it."
+  },
+  {
+    "id": "edict-binding-seal",
+    "character": "Monarque",
+    "form": "Sealing",
+    "title": "The Binding Seal",
+    "description": "A card the vessel played is sealed and removed from play for 10 rounds, with Soul paid by tier.",
+    "flavor": "What he binds, he remembers how to bind.",
+    "series": "SPECIAL",
+    "category": "WILDCARD",
+    "rarity": "SPECIAL",
+    "subtype": "EDICT",
+    "image": "/story/edicts/binding-seal.webp",
+    "type": "WILDCARD",
+    "cardClass": "MONARQUE_EDICT",
+    "effectId": "BINDING_SEAL",
+    "powerGroup": null,
+    "power": null,
+    "rank": null,
+    "unique": true,
+    "rules": {
+      "sealRounds": 10,
+      "soulByTier": {
+        "WEAK": 1,
+        "NORMAL": 2,
+        "POWERFUL": 3,
+        "OP": 3
+      }
+    },
+    "finaleBouts": [],
+    "monarqueLines": {
+      "early": "Be still. A fallen thing is only a card.",
+      "fraying": "Sealed, as I sealed gods. Hold, little vessel."
+    },
+    "soundCue": "sealStamp",
+    "artDirection": "A wax seal pressed into vellum over a card's silhouette, thin cracks already forming."
+  },
+  {
+    "id": "edict-the-unraveling",
+    "character": "Monarque",
+    "form": "Escalating drain",
+    "title": "The Unraveling",
+    "description": "The Unraveling is laid upon a vessel. It drains HP each round and worsens when the holder fails to be rid of it. It may be passed on or broken.",
+    "flavor": "It is not a punishment. It is what the vessel was always going to become.",
+    "series": "SPECIAL",
+    "category": "WILDCARD",
+    "rarity": "SPECIAL",
+    "subtype": "EDICT",
+    "image": "/story/edicts/the-unraveling.webp",
+    "type": "WILDCARD",
+    "cardClass": "MONARQUE_EDICT",
+    "effectId": "UNRAVELING",
+    "powerGroup": null,
+    "power": null,
+    "rank": null,
+    "unique": true,
+    "rules": {
+      "outcomes": [
+        "DESTROYED",
+        "TRANSFERRED",
+        "FAILED",
+        "RETAINED"
+      ],
+      "escalates": true
+    },
+    "finaleBouts": [],
+    "monarqueLines": {
+      "early": "It is the mark of the vessel. Carry it with pride.",
+      "fraying": "It spreads as I willed. What you are, I can unmake."
+    },
+    "soundCue": "unravelingHum",
+    "artDirection": "A thread of grey light unspooling from a hairline crack in a face-shaped silhouette."
+  }
+]

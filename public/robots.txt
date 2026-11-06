@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /cards/
+Disallow: /story/
+Disallow: /ui/
+Disallow: /audio/

@@ -1,0 +1,13 @@
+node_modules
+dist
+.env
+.env.*
+*.log
+.DS_Store
+.netlify
+
+# secret invisible-watermark key: never commit
+scripts/.wm-key
+node_modules
+dist
+android/
